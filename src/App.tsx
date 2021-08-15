@@ -1,14 +1,35 @@
-import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import { Board } from "./Board";
+import { Game } from "./Game";
+import { City } from "./Shared/City";
+import { EDiseaseType } from "./Shared/Enums/DiseaseType";
 
 function App() {
   return (
     <div className="App">
-      <Board />
+      <Game gridSize={{ horizontal: 20, vertical: 10 }} cities={cities} />
     </div>
   );
 }
+
+const cities: { [cityId: string]: City } = {
+  city1: new City(
+    "city1",
+    10000,
+    "Atlanta",
+    { x: 10, y: 3 },
+    ["city2"],
+    EDiseaseType.Yellow,
+    0
+  ),
+  city2: new City(
+    "city2",
+    1000,
+    "Osaka",
+    { x: 2, y: 4 },
+    ["city1"],
+    EDiseaseType.Red,
+    0
+  ),
+};
 
 export default App;

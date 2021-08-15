@@ -8,7 +8,8 @@ export class City {
         name: string,
         coordinates: ICoordinates,
         neighboringCitiIds: string[],
-        diseaseType: EDiseaseType
+        diseaseType: EDiseaseType,
+        diseaseCount: number
     ) {
         this._id = id;
         this._population = population;
@@ -16,6 +17,7 @@ export class City {
         this._coordinates = coordinates;
         this._neighboringCityIds = neighboringCitiIds;
         this._diseaseType = diseaseType;
+        this._diseaseCount = diseaseCount;
     }
     // Properties
     private _id: string;
@@ -24,7 +26,8 @@ export class City {
     private _coordinates: ICoordinates;
     private _neighboringCityIds: string[];
     private _diseaseType: EDiseaseType;
-    private _diseaseCount: number = 0;
+    private _diseaseCount: number;
+    private _hasOutbreak: boolean = false;
 
     // Methods 
     /**
@@ -76,6 +79,10 @@ export class City {
         return this._diseaseCount
     }
     set diseaseCount(newDiseaseCount: number) {
+
+        if (this._diseaseCount + newDiseaseCount > 3) {
+            this._hasOutbreak = true;
+        }
         if (newDiseaseCount <= 0) {
             newDiseaseCount = 0;
         }
@@ -86,17 +93,39 @@ export class City {
     }
 
     /**
+     * Has Outbreak
+     */
+    get hasOutbreak(): boolean {
+        return this._hasOutbreak;
+    }
+    set hasOutbreak(newOutbreakState) {
+        this._hasOutbreak = newOutbreakState
+    }
+
+    /**
      * Method to find city by coordinates.
      * @param {City[]} cities 
      * @param {ICoordinates} coordinates 
      * @returns {City} City
      */
-    static getCityByCoordinates(cities: City[], coordinates: ICoordinates) {
-        return cities.find(
+    static getCityByCoordinates(cities: { [cityId: string]: City }, coordinates: ICoordinates) {
+        const cityKeys = Object.keys(cities);
+        const citiesArray = cityKeys.map((key) => {
+            return cities[key]
+        })
+        return citiesArray.find(
             (city) =>
                 city.coordinates.x === coordinates.x &&
                 city.coordinates.y === coordinates.y
         );
+    }
+
+
+    static applyOutbreak(cities: { [cityId: string]: City }, neighborCityIds: string[]) {
+        neighborCityIds.forEach((key) => {
+            cities[key].diseaseCount += 1;
+        })
+        return cities;
     }
 
     /**
@@ -104,7 +133,7 @@ export class City {
      * @returns {City} Cloned object of the current class instance
      */
     public clone(): City {
-        return new City(this.id, this.population, this.name, this.coordinates, this.neighboringCityIds, this.diseaseType)
+        return new City(this.id, this.population, this.name, this.coordinates, this.neighboringCityIds, this.diseaseType, this.diseaseCount)
     }
 
 }
