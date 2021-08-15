@@ -36,23 +36,23 @@ export const Grid = ({ gridSize, cities }: IGridProps) => {
                     <Cell
                       onCellUpdate={(newCityState) => {
                         if (newCityState) {
-                          // Inititialize empty object to populate it with cities to update
-                          let updatedCities: { [cityId: string]: City } = {};
-
-                          if (newCityState.hasOutbreak) {
-                            newCityState?.neighboringCityIds.forEach((key) => {
-                              let clone = citiesState[key].clone();
-                              clone.diseaseCount += 1;
-                              clone.hasOutbreak = false;
-                              updatedCities[key] = clone;
-                            });
-                          }
                           // Update states of all cities
                           setCitiesState((prev) => {
-                            return {
+                            let updatedCitiesState = {
                               ...prev,
-                              ...updatedCities,
                               [newCityState.id]: newCityState,
+                            };
+                            if (newCityState.hasOutbreak) {
+                              updatedCitiesState = {
+                                ...updatedCitiesState,
+                                ...City.getNeighborsAfterOutbreak(
+                                  citiesState,
+                                  newCityState.neighboringCityIds
+                                ),
+                              };
+                            }
+                            return {
+                              ...updatedCitiesState,
                             };
                           });
                         }

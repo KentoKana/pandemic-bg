@@ -80,7 +80,7 @@ export class City {
     }
     set diseaseCount(newDiseaseCount: number) {
 
-        if (this._diseaseCount + newDiseaseCount > 3) {
+        if (newDiseaseCount > 3) {
             this._hasOutbreak = true;
         }
         if (newDiseaseCount <= 0) {
@@ -120,12 +120,24 @@ export class City {
         );
     }
 
-
-    static applyOutbreak(cities: { [cityId: string]: City }, neighborCityIds: string[]) {
+    /**
+     * Get cities with updated disease count after outbreak
+     * @param cities 
+     * @param neighborCityIds 
+     * @returns {{ [cityId: string]: City }}
+     */
+    static getNeighborsAfterOutbreak(cities: { [cityId: string]: City }, neighborCityIds: string[]) {
+        let updatedCities: { [cityId: string]: City } = {};
+        // Populate updatedCities with cities to apply outbreaks for
         neighborCityIds.forEach((key) => {
-            cities[key].diseaseCount += 1;
+            let neighborToApplyOutbreak = cities[key].clone();
+            neighborToApplyOutbreak.diseaseCount += 1;
+            updatedCities[key] = neighborToApplyOutbreak;
         })
-        return cities;
+        return {
+            ...cities,
+            ...updatedCities
+        }
     }
 
     /**

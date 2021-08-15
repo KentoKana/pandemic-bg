@@ -17,7 +17,7 @@ const cities: { [cityId: string]: City } = {
     10000,
     "Atlanta",
     { x: 10, y: 3 },
-    ["city2"],
+    ["city2", "city3"],
     EDiseaseType.Yellow,
     0
   ),
@@ -28,6 +28,15 @@ const cities: { [cityId: string]: City } = {
     { x: 2, y: 4 },
     ["city1"],
     EDiseaseType.Red,
+    0
+  ),
+  city3: new City(
+    "city3",
+    10030,
+    "Algerie",
+    { x: 3, y: 8 },
+    ["city1"],
+    EDiseaseType.Blue,
     0
   ),
 };

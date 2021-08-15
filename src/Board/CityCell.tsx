@@ -23,7 +23,7 @@ export const CityCell = ({ city, onCityUpdate }: ICityCellProps) => {
         <button
           onClick={() => {
             const clone = city.clone();
-            clone.diseaseCount += 3;
+            clone.diseaseCount += 1;
             onCityUpdate(clone);
           }}
         >
