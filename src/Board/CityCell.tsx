@@ -23,11 +23,6 @@ export const CityCell = ({ city, onCityUpdate }: ICityCellProps) => {
         <button
           onClick={() => {
             const clone = city.clone();
-            // if (clone.diseaseCount + 1 > 3) {
-            //   clone.hasOutbreak = true;
-            // } else {
-            //   clone.hasOutbreak = false;
-            // }
             clone.diseaseCount += 1;
             onCityUpdate(clone);
           }}

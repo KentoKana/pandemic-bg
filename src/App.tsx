@@ -19,8 +19,7 @@ const cities: { [cityId: string]: City } = {
     { x: 10, y: 3 },
     ["city3"],
     EDiseaseType.Yellow,
-    0,
-    false
+    0
   ),
   city2: new City(
     "city2",
@@ -29,8 +28,7 @@ const cities: { [cityId: string]: City } = {
     { x: 2, y: 4 },
     ["city3"],
     EDiseaseType.Red,
-    0,
-    false
+    0
   ),
   city3: new City(
     "city3",
@@ -39,8 +37,7 @@ const cities: { [cityId: string]: City } = {
     { x: 3, y: 8 },
     ["city1", "city2", "city4"],
     EDiseaseType.Blue,
-    0,
-    false
+    0
   ),
   city4: new City(
     "city4",
@@ -49,8 +46,7 @@ const cities: { [cityId: string]: City } = {
     { x: 5, y: 8 },
     ["city3"],
     EDiseaseType.Red,
-    0,
-    false
+    0
   ),
 };
 

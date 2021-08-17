@@ -1,6 +1,10 @@
 import { ICoordinates } from "../Coordinates";
 import { EDiseaseType } from "../Enums/DiseaseType";
 
+/**
+ * City class.
+ * Creates an instance of a city. 
+ */
 export class City {
     constructor(
         id: string,
@@ -10,7 +14,6 @@ export class City {
         neighborCityIds: string[],
         diseaseType: EDiseaseType,
         diseaseCount: number,
-        hasOutbreak: boolean
     ) {
         this._id = id;
         this._population = population;
@@ -19,7 +22,6 @@ export class City {
         this._neighborCityIds = neighborCityIds;
         this._diseaseType = diseaseType;
         this._diseaseCount = diseaseCount;
-        this._hasOutbreak = hasOutbreak;
     }
     // Properties
     private _id: string;
@@ -28,7 +30,7 @@ export class City {
     private _coordinates: ICoordinates;
     private _neighborCityIds: string[];
     private _diseaseType: EDiseaseType;
-    private _diseaseCount: number;
+    private _diseaseCount: number = 0;
     private _hasOutbreak: boolean = false;
 
     // Methods 
@@ -124,27 +126,48 @@ export class City {
 
     /**
      * Get cities with updated disease count after outbreak
-     * @param cities 
-     * @param neighborCityIds 
-     * @returns {{ [cityId: string]: City }}
+    
+     * @param currentCity 
+     * @param allCities 
+     * @param neighborsToUpdate 
+     * @param cityIdsAlreadyLookedAt - 
+     * @returns Updated neighboring cities state after outbreak 
      */
-    static getNeighborsAfterOutbreak(cities: { [cityId: string]: City }, neighborCityIds: string[]) {
-        // let updatedCities: { [cityId: string]: City } = {};
-        // // Populate updatedCities with cities to apply outbreaks for
-        // neighborCityIds.forEach((key) => {
-        //     let neighborToApplyOutbreak = cities[key].clone();
-        //     neighborToApplyOutbreak.diseaseCount += 1;
-        //     updatedCities[key] = neighborToApplyOutbreak;
-        //     if (neighborToApplyOutbreak.hasOutbreak) {
-        //         return this.getNeighborsAfterOutbreak(cities, neighborToApplyOutbreak.neighboringCityIds.filter((ncid) => {
-        //             return ncid !== key
-        //         }))
-        //     }
-        // })
-        // return {
-        //     ...cities,
-        //     ...updatedCities
-        // }
+    static getNeighborsAfterOutbreak(currentCity: City,
+        allCities: {
+            [key: string]: City;
+        },
+        neighborsToUpdate: { [key: string]: City },
+        cityIdsAlreadyLookedAt: string[]) {
+        // Keep track of cities that outbreaks have already been applied to
+        cityIdsAlreadyLookedAt.push(currentCity.id);
+
+        // Base case: If the city does not have an outbreak status and the overflow of outbreak disease count have not been applied to this city,
+        // return the state of neighbors post outbreak
+        if (
+            !currentCity.hasOutbreak &&
+            cityIdsAlreadyLookedAt.some(
+                (cala) => !currentCity.neighboringCityIds.some((c) => c === cala)
+            )
+        )
+            return neighborsToUpdate;
+
+        // Iterate through each neighbors of the current city.
+        // If neighboring cities have not already been traversed, apply the disease count overflow logic.
+        currentCity.neighboringCityIds.forEach((neighborKey) => {
+            neighborsToUpdate[neighborKey] = allCities[neighborKey];
+
+            if (!cityIdsAlreadyLookedAt.some((cala) => cala === neighborKey)) {
+                neighborsToUpdate[neighborKey].diseaseCount += 1;
+                return this.getNeighborsAfterOutbreak(
+                    neighborsToUpdate[neighborKey],
+                    allCities,
+                    neighborsToUpdate,
+                    cityIdsAlreadyLookedAt
+                );
+            }
+        });
+        return neighborsToUpdate;
     }
 
     /**
@@ -152,6 +175,6 @@ export class City {
      * @returns {City} Cloned object of the current class instance
      */
     public clone(): City {
-        return new City(this.id, this.population, this.name, this.coordinates, this.neighboringCityIds, this.diseaseType, this.diseaseCount, this.hasOutbreak)
+        return new City(this.id, this.population, this.name, this.coordinates, this.neighboringCityIds, this.diseaseType, this.diseaseCount)
     }
 }
