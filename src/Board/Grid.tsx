@@ -37,22 +37,38 @@ export const Grid = ({ gridSize, cities }: IGridProps) => {
                       onCellUpdate={(newCityState) => {
                         if (newCityState) {
                           // Update states of all cities
-                          setCitiesState((prev) => {
-                            let updatedCitiesState = {
-                              ...prev,
-                              [newCityState.id]: newCityState,
-                            };
-                            if (newCityState.hasOutbreak) {
-                              updatedCitiesState = {
-                                ...updatedCitiesState,
-                                ...City.getNeighborsAfterOutbreak(
-                                  citiesState,
-                                  newCityState.neighboringCityIds
-                                ),
-                              };
-                            }
+                          const updatedNeighbors = applyOutbreakRecursively(
+                            newCityState,
+                            citiesState,
+                            {},
+                            []
+                          );
+                          // let updatedNeighbors: { [key: string]: City } = {};
+                          // if (newCityState.hasOutbreak) {
+                          //   newCityState.neighboringCityIds.forEach(
+                          //     (neighborKey) => {
+                          //       updatedNeighbors[neighborKey] =
+                          //         citiesState[neighborKey];
+                          //       updatedNeighbors[neighborKey].diseaseCount += 1;
+
+                          //       if (updatedNeighbors[neighborKey].hasOutbreak) {
+                          //         console.log(updatedNeighbors[neighborKey]);
+
+                          //         updatedNeighbors[
+                          //           neighborKey
+                          //         ].neighboringCityIds.forEach((key) => {
+                          //           updatedNeighbors[key] = citiesState[key];
+                          //           updatedNeighbors[key].diseaseCount += 1;
+                          //         });
+                          //       }
+                          //     }
+                          //   );
+                          // }
+                          setCitiesState((prevCitiesState) => {
                             return {
-                              ...updatedCitiesState,
+                              ...prevCitiesState,
+                              [newCityState.id]: newCityState,
+                              ...updatedNeighbors,
                             };
                           });
                         }
@@ -69,4 +85,37 @@ export const Grid = ({ gridSize, cities }: IGridProps) => {
       })}
     </>
   );
+};
+
+const applyOutbreakRecursively = (
+  currentCity: City,
+  cities: {
+    [key: string]: City;
+  },
+  updatedNeighbors: { [key: string]: City },
+  citiesAlreadyLookedAt: string[]
+) => {
+  citiesAlreadyLookedAt.push(currentCity.id);
+
+  if (
+    !currentCity.hasOutbreak &&
+    citiesAlreadyLookedAt.some(
+      (cala) => !currentCity.neighboringCityIds.some((c) => c === cala)
+    )
+  )
+    return updatedNeighbors;
+
+  currentCity.neighboringCityIds.forEach((neighborKey) => {
+    updatedNeighbors[neighborKey] = cities[neighborKey];
+
+    if (!citiesAlreadyLookedAt.some((cala) => cala === neighborKey)) {
+      updatedNeighbors[neighborKey].diseaseCount += 1;
+      return applyOutbreakRecursively(
+        updatedNeighbors[neighborKey],
+        cities,
+        updatedNeighbors,
+        citiesAlreadyLookedAt
+      );
+    }
+  });
 };

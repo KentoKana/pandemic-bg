@@ -7,24 +7,26 @@ export class City {
         population: number,
         name: string,
         coordinates: ICoordinates,
-        neighboringCitiIds: string[],
+        neighborCityIds: string[],
         diseaseType: EDiseaseType,
-        diseaseCount: number
+        diseaseCount: number,
+        hasOutbreak: boolean
     ) {
         this._id = id;
         this._population = population;
         this._name = name;
         this._coordinates = coordinates;
-        this._neighboringCityIds = neighboringCitiIds;
+        this._neighborCityIds = neighborCityIds;
         this._diseaseType = diseaseType;
         this._diseaseCount = diseaseCount;
+        this._hasOutbreak = hasOutbreak;
     }
     // Properties
     private _id: string;
     private _name: string;
     private _population: number = 0;
     private _coordinates: ICoordinates;
-    private _neighboringCityIds: string[];
+    private _neighborCityIds: string[];
     private _diseaseType: EDiseaseType;
     private _diseaseCount: number;
     private _hasOutbreak: boolean = false;
@@ -62,7 +64,7 @@ export class City {
      * Neighboring City Ids
      */
     get neighboringCityIds(): string[] {
-        return this._neighboringCityIds;
+        return this._neighborCityIds;
     }
 
     /**
@@ -79,14 +81,14 @@ export class City {
         return this._diseaseCount
     }
     set diseaseCount(newDiseaseCount: number) {
-
         if (newDiseaseCount > 3) {
-            this._hasOutbreak = true;
+            this.hasOutbreak = true;
+        } else {
+            this.hasOutbreak = false;
         }
         if (newDiseaseCount <= 0) {
             newDiseaseCount = 0;
-        }
-        if (newDiseaseCount >= 3) {
+        } else if (newDiseaseCount >= 3) {
             newDiseaseCount = 3;
         }
         this._diseaseCount = newDiseaseCount;
@@ -127,17 +129,22 @@ export class City {
      * @returns {{ [cityId: string]: City }}
      */
     static getNeighborsAfterOutbreak(cities: { [cityId: string]: City }, neighborCityIds: string[]) {
-        let updatedCities: { [cityId: string]: City } = {};
-        // Populate updatedCities with cities to apply outbreaks for
-        neighborCityIds.forEach((key) => {
-            let neighborToApplyOutbreak = cities[key].clone();
-            neighborToApplyOutbreak.diseaseCount += 1;
-            updatedCities[key] = neighborToApplyOutbreak;
-        })
-        return {
-            ...cities,
-            ...updatedCities
-        }
+        // let updatedCities: { [cityId: string]: City } = {};
+        // // Populate updatedCities with cities to apply outbreaks for
+        // neighborCityIds.forEach((key) => {
+        //     let neighborToApplyOutbreak = cities[key].clone();
+        //     neighborToApplyOutbreak.diseaseCount += 1;
+        //     updatedCities[key] = neighborToApplyOutbreak;
+        //     if (neighborToApplyOutbreak.hasOutbreak) {
+        //         return this.getNeighborsAfterOutbreak(cities, neighborToApplyOutbreak.neighboringCityIds.filter((ncid) => {
+        //             return ncid !== key
+        //         }))
+        //     }
+        // })
+        // return {
+        //     ...cities,
+        //     ...updatedCities
+        // }
     }
 
     /**
@@ -145,7 +152,6 @@ export class City {
      * @returns {City} Cloned object of the current class instance
      */
     public clone(): City {
-        return new City(this.id, this.population, this.name, this.coordinates, this.neighboringCityIds, this.diseaseType, this.diseaseCount)
+        return new City(this.id, this.population, this.name, this.coordinates, this.neighboringCityIds, this.diseaseType, this.diseaseCount, this.hasOutbreak)
     }
-
 }
