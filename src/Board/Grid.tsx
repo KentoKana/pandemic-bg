@@ -19,7 +19,7 @@ export const Grid = ({ gridSize, cities }: IGridProps) => {
       {new Array(gridSize.vertical).fill(null).map((_, vIndex) => {
         return (
           <div key={vIndex}>
-            <div className="d-flex my-2 align-items-center">
+            <div className="d-flex align-items-center">
               {/* Generate columns (i.e. X axis) */}
               {new Array(gridSize.horizontal).fill(null).map((_, hIndex) => {
                 // Grid logic starts here
@@ -32,7 +32,10 @@ export const Grid = ({ gridSize, cities }: IGridProps) => {
                 );
 
                 return (
-                  <span key={hIndex} className="px-1">
+                  <div
+                    key={hIndex}
+                    className="d-flex justify-content-center align-items-center"
+                  >
                     <Cell
                       onCellUpdate={(newCityState) => {
                         if (newCityState) {
@@ -54,9 +57,9 @@ export const Grid = ({ gridSize, cities }: IGridProps) => {
                         }
                       }}
                       city={cityForCell}
-                      coorditnates={currentCoords}
+                      coordinates={currentCoords}
                     />
-                  </span>
+                  </div>
                 );
               })}
             </div>

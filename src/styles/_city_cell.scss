@@ -1,0 +1,72 @@
+.city {
+  @mixin border($disease-color) {
+    border: 3px solid $disease-color;
+    width: 100%;
+    height: 100%;
+    border-radius: 40px;
+    padding: 3px;
+  }
+  @mixin disease-level($disease-level, $disease-color) {
+    @include border($disease-color);
+    color: white !important;
+    @if $disease-level == 1 {
+      background: darken($disease-color, 1%);
+    }
+    @if $disease-level == 2 {
+      background: darken($disease-color, 15%);
+    }
+    @if $disease-level == 3 {
+      background: darken($disease-color, 30%);
+    }
+  }
+  &__disease {
+    &--red {
+      @include border($disease-red);
+      &--level1 {
+        @include disease-level(1, $disease-red);
+      }
+      &--level2 {
+        @include disease-level(2, $disease-red);
+      }
+      &--level3 {
+        @include disease-level(3, $disease-red);
+      }
+    }
+    &--yellow {
+      @include border($disease-yellow);
+      &--level1 {
+        @include disease-level(1, $disease-yellow);
+      }
+      &--level2 {
+        @include disease-level(2, $disease-yellow);
+      }
+      &--level3 {
+        @include disease-level(3, $disease-yellow);
+      }
+    }
+    &--black {
+      @include border($disease-black);
+      &--level1 {
+        @include disease-level(1, $disease-black);
+      }
+      &--level2 {
+        @include disease-level(2, $disease-black);
+      }
+      &--level3 {
+        @include disease-level(3, $disease-black);
+      }
+    }
+    &--blue {
+      @include border($disease-blue);
+      &--level1 {
+        @include disease-level(1, $disease-blue);
+      }
+      &--level2 {
+        @include disease-level(2, $disease-blue);
+      }
+      &--level3 {
+        @include disease-level(3, $disease-blue);
+      }
+    }
+  }
+}

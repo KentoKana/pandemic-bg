@@ -22,7 +22,7 @@ export const cities: { [cityId: string]: City } = {
     ),
     city3: new City(
         "city3",
-        10030,
+        1012030,
         "Algerie",
         { x: 3, y: 8 },
         ["city1", "city2", "city4"],
@@ -31,11 +31,47 @@ export const cities: { [cityId: string]: City } = {
     ),
     city4: new City(
         "city4",
-        1000,
+        10400,
         "Tokyo",
         { x: 5, y: 8 },
-        ["city3"],
+        ["city3", "city5"],
         EDiseaseType.Red,
+        0
+    ),
+    city5: new City(
+        "city5",
+        10020,
+        "Melbourne",
+        { x: 3, y: 1 },
+        ["city4", "city6"],
+        EDiseaseType.Red,
+        0
+    ),
+    city6: new City(
+        "city6",
+        10020,
+        "Melbourne",
+        { x: 16, y: 6 },
+        ["city5", "city7"],
+        EDiseaseType.Blue,
+        0
+    ),
+    city7: new City(
+        "city7",
+        10020,
+        "Melbourne",
+        { x: 7, y: 9 },
+        ["city6", "city8"],
+        EDiseaseType.Yellow,
+        0
+    ),
+    city8: new City(
+        "city8",
+        10020,
+        "Melbourne",
+        { x: 18, y: 4 },
+        ["city7"],
+        EDiseaseType.Black,
         0
     ),
 };

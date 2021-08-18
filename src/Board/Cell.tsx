@@ -3,15 +3,18 @@ import { ICoordinates } from "../Shared/Coordinates";
 import { CityCell } from "./CityCell";
 
 interface ICellProps {
-  coorditnates: ICoordinates;
+  coordinates: ICoordinates;
   city?: City;
   onCellUpdate: (newCellState: City | undefined) => void;
 }
-export const Cell = ({ coorditnates, city, onCellUpdate }: ICellProps) => {
+export const Cell = ({ coordinates, city, onCellUpdate }: ICellProps) => {
   return (
-    <div className="d-flex align-items-center">
-      {coorditnates.x},{coorditnates.y}{" "}
-      {city && (
+    <div className={`d-flex align-items-center justify-content-center cell`}>
+      {!city ? (
+        <>
+          {coordinates.x},{coordinates.y}
+        </>
+      ) : (
         <CityCell
           onCityUpdate={(newCityState) => {
             onCellUpdate(newCityState);

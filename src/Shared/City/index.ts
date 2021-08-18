@@ -125,13 +125,13 @@ export class City {
     }
 
     /**
-     * Get cities with updated disease count after outbreak
-    
+     * Get cities with updated disease count after an outbreak
+     *
      * @param currentCity 
      * @param allCities 
      * @param neighborsToUpdate 
      * @param cityIdsAlreadyLookedAt - 
-     * @returns Updated neighboring cities state after outbreak 
+     * @returns {{neighborKey: City }} Updated neighboring cities state after outbreak 
      */
     static getNeighborsAfterOutbreak(currentCity: City,
         allCities: {
