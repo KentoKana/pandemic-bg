@@ -5,7 +5,7 @@ import { cities } from "./Shared/Data/Cities";
 function App() {
   return (
     <div className="App">
-      <Game gridSize={{ horizontal: 20, vertical: 10 }} cities={cities} />
+      <Game gridSize={{ horizontal: 30, vertical: 20 }} cities={cities} />
     </div>
   );
 }

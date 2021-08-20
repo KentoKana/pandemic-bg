@@ -22,6 +22,11 @@ export const CityCell = ({ city, onCityUpdate }: ICityCellProps) => {
             <div>{city.population}</div>
             <div>{city.diseaseType}</div>
             <div className="text-danger">{city.diseaseCount}</div>
+            <div>
+              {city.neighboringCityIds.map((id) => {
+                return <div>{id}</div>;
+              })}
+            </div>
             <span>
               {city.coordinates.x},{city.coordinates.y}
             </span>

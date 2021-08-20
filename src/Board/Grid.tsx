@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { City } from "../Shared/City";
+import { City, CityId } from "../Shared/City";
 import { ICoordinates } from "../Shared/Coordinates";
 import { Cell } from "./Cell";
 
@@ -8,7 +8,7 @@ interface IGridProps {
    * Grid size of the board
    */
   gridSize: { horizontal: number; vertical: number };
-  cities: { [cityId: string]: City };
+  cities: { [key in CityId]: City };
 }
 export const Grid = ({ gridSize, cities }: IGridProps) => {
   const [citiesState, setCitiesState] = useState(cities);

@@ -7,11 +7,11 @@ import { EDiseaseType } from "../Enums/DiseaseType";
  */
 export class City {
     constructor(
-        id: string,
+        id: CityId,
         population: number,
         name: string,
         coordinates: ICoordinates,
-        neighborCityIds: string[],
+        neighborCityIds: CityId[],
         diseaseType: EDiseaseType,
         diseaseCount: number,
     ) {
@@ -24,11 +24,11 @@ export class City {
         this._diseaseCount = diseaseCount;
     }
     // Properties
-    private _id: string;
+    private _id: CityId;
     private _name: string;
     private _population: number = 0;
     private _coordinates: ICoordinates;
-    private _neighborCityIds: string[];
+    private _neighborCityIds: CityId[];
     private _diseaseType: EDiseaseType;
     private _diseaseCount: number = 0;
     private _hasOutbreak: boolean = false;
@@ -37,7 +37,7 @@ export class City {
     /**
      * Id
      */
-    get id(): string {
+    get id(): CityId {
         return this._id
     }
 
@@ -65,7 +65,7 @@ export class City {
     /**
      * Neighboring City Ids
      */
-    get neighboringCityIds(): string[] {
+    get neighboringCityIds(): CityId[] {
         return this._neighborCityIds;
     }
 
@@ -135,10 +135,10 @@ export class City {
      */
     static getNeighborsAfterOutbreak(currentCity: City,
         allCities: {
-            [key: string]: City;
+            [key in CityId]: City;
         },
         neighborsToUpdate: { [key: string]: City },
-        cityIdsAlreadyLookedAt: string[]) {
+        cityIdsAlreadyLookedAt: CityId[]) {
         // Keep track of cities that outbreaks have already been applied to
         cityIdsAlreadyLookedAt.push(currentCity.id);
 
@@ -178,3 +178,5 @@ export class City {
         return new City(this.id, this.population, this.name, this.coordinates, this.neighboringCityIds, this.diseaseType, this.diseaseCount)
     }
 }
+
+export type CityId = "sanfrancisco" | "losangeles" | "chicago" | "atlanta" | "mexicocity" | "lima" | "santiago" | "atlanta" | "miami" | "bogota" | "buenosaires" | "saopaulo" | "montreal" | "newyork" | "washington" | "saopaulo" | "madrid" | "london" | "paris" | "lagos" | "algiers" | "kinshasa" | "essen" | "milan" | "stpetersburg" | "istanbul" | "cairo" | "khartoum" | "johannesburg" | "moscow" | "baghdad" | "riyadh" | "tehran" | "karachi" | "mumbai" | "delhi" | "chennai" | "kolkata" | "bangkok" | "jakarta" | "beijing" | "shanghai" | "hongkong" | "hochiminhcity" | "seoul" | "taipei" | "manila" | "tokyo" | "osaka" | "sydney"
