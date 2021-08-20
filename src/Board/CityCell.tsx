@@ -13,7 +13,7 @@ export const CityCell = ({ city, onCityUpdate }: ICityCellProps) => {
       CityUtils.getDiseasedCityClassName(city?.diseaseType, city.diseaseCount)
     : "";
   return (
-    <div id={`${city?.id ?? ""}`} className={cityClassName}>
+    <div id={`${city?.id ?? ""}`} className={cityClassName + " " + city.id}>
       {city.coordinates.x},{city.coordinates.y}
       <Tooltip target={city.id}>
         {city && (
@@ -24,7 +24,7 @@ export const CityCell = ({ city, onCityUpdate }: ICityCellProps) => {
             <div className="text-danger">{city.diseaseCount}</div>
             <div>
               {city.neighboringCityIds.map((id) => {
-                return <div>{id}</div>;
+                return <div key={id}>{id}</div>;
               })}
             </div>
             <span>

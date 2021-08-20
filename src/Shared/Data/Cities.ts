@@ -105,7 +105,7 @@ export const cities: { [key in CityId]: City } = {
         "essen",
         129321,
         "Essen",
-        { x: 11, y: 3 },
+        { x: 11, y: 2 },
         ["london", "paris", "milan", "stpetersburg"],
         EDiseaseType.Blue,
         0
@@ -411,7 +411,7 @@ export const cities: { [key in CityId]: City } = {
         "khartoum",
         1020,
         "Khartoum",
-        { x: 10, y: 12 },
+        { x: 13, y: 12 },
         ["lagos", "cairo", "johannesburg", "kinshasa"],
         EDiseaseType.Yellow,
         0
