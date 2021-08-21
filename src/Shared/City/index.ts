@@ -167,6 +167,7 @@ export class City {
                 );
             }
         });
+
         return neighborsToUpdate;
     }
 

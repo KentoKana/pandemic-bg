@@ -3,6 +3,7 @@ import { City, CityId } from "../Shared/City";
 import { CityUtils } from "../Shared/City/CityUtils";
 import { ICoordinates } from "../Shared/Coordinates";
 import { Cell } from "./Cell";
+import { GridCanvas } from "./GridCanvas";
 
 interface IGridProps {
   /**
@@ -14,38 +15,12 @@ interface IGridProps {
 export const Grid = ({ gridSize, cities }: IGridProps) => {
   const [citiesState, setCitiesState] = useState(cities);
   const [selectedCity, setSelectedCity] = useState<City>();
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  useEffect(() => {
-    if (canvasRef?.current) {
-      const ctx = canvasRef.current.getContext("2d");
-      if (ctx) {
-        if (selectedCity) {
-          ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-          ctx.beginPath();
-          ctx.shadowBlur = 2.5;
-          ctx.shadowColor = "purple";
-          CityUtils.connectCityAndNeighborsWithLines(ctx, selectedCity);
-        }
-      }
-    }
-  }, [cities, selectedCity]);
+  console.log(citiesState);
 
   return (
     <div>
       {/* Canvas for drawing lines to selected city's neighbor */}
-      <canvas
-        ref={canvasRef}
-        id="canvas"
-        width={900}
-        height={600}
-        style={{
-          zIndex: -1,
-          position: "absolute",
-          left: 0,
-          right: 0,
-          margin: "auto",
-        }}
-      ></canvas>
+      <GridCanvas selectedCity={selectedCity} />
       {/* Generate rows (i.e. Y axis)*/}
       {new Array(gridSize.vertical).fill(null).map((_, vIndex) => {
         return (
@@ -82,6 +57,7 @@ export const Grid = ({ gridSize, cities }: IGridProps) => {
                               []
                             );
                           setCitiesState((prevCitiesState) => {
+                            newCityState.hasOutbreak = false;
                             return {
                               ...prevCitiesState,
                               [newCityState.id]: newCityState,

@@ -4,7 +4,7 @@ import { CityUtils } from "../Shared/City/CityUtils";
 
 interface IGridCanvasProps {
   selectedCity?: City;
-  cities: { [key in CityId]: City };
+  cities?: { [key in CityId]: City };
 }
 export const GridCanvas = ({ selectedCity, cities }: IGridCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -13,7 +13,18 @@ export const GridCanvas = ({ selectedCity, cities }: IGridCanvasProps) => {
     if (canvasRef?.current) {
       const ctx = canvasRef.current.getContext("2d");
       if (ctx) {
-        CityUtils.connectAllCitiesWithLines(ctx, cities);
+        // Draw lines between all cities through its neighbors
+        if (cities) {
+          CityUtils.connectAllCitiesWithLines(ctx, cities);
+        }
+        // Draw lines between selected city and its neighbors
+        if (selectedCity) {
+          ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+          ctx.beginPath();
+          ctx.shadowBlur = 2.5;
+          ctx.shadowColor = "purple";
+          CityUtils.connectCityAndNeighborsWithLines(ctx, selectedCity);
+        }
       }
     }
   }, [cities, selectedCity]);
