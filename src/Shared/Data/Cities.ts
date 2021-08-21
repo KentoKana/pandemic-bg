@@ -7,7 +7,7 @@ export const cities: { [key in CityId]: City } = {
         10000,
         "Atlanta",
         { x: 4, y: 4 },
-        ["chicago"],
+        ["chicago", "miami", "washington"],
         EDiseaseType.Blue,
         0
     ),
@@ -25,7 +25,7 @@ export const cities: { [key in CityId]: City } = {
         1012030,
         "San Francisco",
         { x: 0, y: 2 },
-        ["chicago", "losangeles"],
+        ["chicago", "losangeles", "tokyo", "manila"],
         EDiseaseType.Blue,
         0
     ),
@@ -34,7 +34,7 @@ export const cities: { [key in CityId]: City } = {
         10400,
         "Los Angeles",
         { x: 0, y: 5 },
-        ["chicago", "sanfrancisco", "mexicocity"],
+        ["chicago", "sanfrancisco", "mexicocity", "sydney"],
         EDiseaseType.Yellow,
         0
     ),
@@ -43,7 +43,7 @@ export const cities: { [key in CityId]: City } = {
         10020,
         "Mexico City",
         { x: 3, y: 6 },
-        ["chicago", "losangeles", "miami"],
+        ["chicago", "losangeles", "miami", "bogota", "lima"],
         EDiseaseType.Yellow,
         0
     ),
@@ -52,7 +52,7 @@ export const cities: { [key in CityId]: City } = {
         10020,
         "Montreal",
         { x: 5, y: 2 },
-        ["chicago", "newyork"],
+        ["chicago", "newyork", "washington"],
         EDiseaseType.Blue,
         0
     ),
@@ -70,7 +70,7 @@ export const cities: { [key in CityId]: City } = {
         10020,
         "Washington",
         { x: 6, y: 4 },
-        ["montreal", "newyork"],
+        ["montreal", "newyork", "miami", "atlanta"],
         EDiseaseType.Blue,
         0
     ),
@@ -79,7 +79,7 @@ export const cities: { [key in CityId]: City } = {
         129321,
         "London",
         { x: 10, y: 1 },
-        ["newyork", "madrid"],
+        ["newyork", "madrid", "paris", "essen"],
         EDiseaseType.Blue,
         0
     ),
@@ -88,7 +88,7 @@ export const cities: { [key in CityId]: City } = {
         129321,
         "Madrid",
         { x: 10, y: 4 },
-        ["london", "newyork"],
+        ["london", "newyork", "saopaulo", "algiers", "paris"],
         EDiseaseType.Blue,
         0
     ),
@@ -97,7 +97,7 @@ export const cities: { [key in CityId]: City } = {
         129321,
         "Paris",
         { x: 11, y: 3 },
-        ["london", "madrid", "essen"],
+        ["london", "madrid", "essen", "algiers", "milan"],
         EDiseaseType.Blue,
         0
     ),
@@ -105,7 +105,7 @@ export const cities: { [key in CityId]: City } = {
         "essen",
         129321,
         "Essen",
-        { x: 11, y: 2 },
+        { x: 11, y: 1 },
         ["london", "paris", "milan", "stpetersburg"],
         EDiseaseType.Blue,
         0
@@ -142,7 +142,7 @@ export const cities: { [key in CityId]: City } = {
         129321,
         "Algiers",
         { x: 11, y: 5 },
-        ["essen", "paris", "istanbul"],
+        ["cairo", "paris", "istanbul", "madrid"],
         EDiseaseType.Black,
         0
     ),
@@ -186,7 +186,7 @@ export const cities: { [key in CityId]: City } = {
         "riyadh",
         129321,
         "Riyadh",
-        { x: 16, y: 8 },
+        { x: 16, y: 9 },
         ["cairo", "baghdad", "karachi"],
         EDiseaseType.Black,
         0
@@ -213,7 +213,7 @@ export const cities: { [key in CityId]: City } = {
         "mumbai",
         129321,
         "Mumbai",
-        { x: 16, y: 10 },
+        { x: 18, y: 10 },
         ["karachi", "chennai", "delhi"],
         EDiseaseType.Black,
         0
@@ -222,7 +222,7 @@ export const cities: { [key in CityId]: City } = {
         "chennai",
         129321,
         "Chennai",
-        { x: 18, y: 12 },
+        { x: 20, y: 12 },
         ["mumbai", "delhi", "kolkata", "bangkok", "jakarta"],
         EDiseaseType.Black,
         0
@@ -259,7 +259,7 @@ export const cities: { [key in CityId]: City } = {
         129321,
         "Ho Chi Minh City",
         { x: 23, y: 12 },
-        ["bangkok", "chennai", "hochiminhcity"],
+        ["bangkok", "jakarta", "hongkong", "manila"],
         EDiseaseType.Red,
         0
     ),
@@ -277,16 +277,16 @@ export const cities: { [key in CityId]: City } = {
         129321,
         "Shanghai",
         { x: 24, y: 7 },
-        ["beijing", "seoul", "tokyo", "taipei"],
+        ["beijing", "seoul", "tokyo", "taipei", "hongkong"],
         EDiseaseType.Red,
         0
     ),
     beijing: new City(
         "beijing",
         129321,
-        "Hong Kong",
+        "Beijing",
         { x: 24, y: 5 },
-        ["beijing", "seoul", "tokyo", "taipei"],
+        ["seoul", "shanghai"],
         EDiseaseType.Red,
         0
     ),
@@ -357,7 +357,7 @@ export const cities: { [key in CityId]: City } = {
         "bogota",
         1020,
         "Bogota",
-        { x: 5, y: 8 },
+        { x: 5, y: 10 },
         ["miami", "mexicocity", "lima", "buenosaires", "saopaulo"],
         EDiseaseType.Yellow,
         0
@@ -366,7 +366,7 @@ export const cities: { [key in CityId]: City } = {
         "lima",
         1020,
         "Lima",
-        { x: 4, y: 11 },
+        { x: 4, y: 14 },
         ["mexicocity", "bogota", "santiago"],
         EDiseaseType.Yellow,
         0
@@ -375,7 +375,7 @@ export const cities: { [key in CityId]: City } = {
         "santiago",
         1020,
         "Santiago",
-        { x: 4, y: 14 },
+        { x: 4, y: 18 },
         ["lima"],
         EDiseaseType.Yellow,
         0
@@ -384,7 +384,7 @@ export const cities: { [key in CityId]: City } = {
         "buenosaires",
         1020,
         "Buenos Aires",
-        { x: 6, y: 14 },
+        { x: 6, y: 17 },
         ["bogota", "saopaulo"],
         EDiseaseType.Yellow,
         0
@@ -393,8 +393,8 @@ export const cities: { [key in CityId]: City } = {
         "saopaulo",
         1020,
         "Sao Paulo",
-        { x: 7, y: 11 },
-        ["buenosaires", "bogota", "lagos"],
+        { x: 7, y: 15 },
+        ["buenosaires", "bogota", "lagos", "madrid"],
         EDiseaseType.Yellow,
         0
     ),
@@ -411,7 +411,7 @@ export const cities: { [key in CityId]: City } = {
         "khartoum",
         1020,
         "Khartoum",
-        { x: 13, y: 12 },
+        { x: 14, y: 12 },
         ["lagos", "cairo", "johannesburg", "kinshasa"],
         EDiseaseType.Yellow,
         0
@@ -420,7 +420,7 @@ export const cities: { [key in CityId]: City } = {
         "kinshasa",
         1020,
         "Kinshasa",
-        { x: 12, y: 12 },
+        { x: 12, y: 14 },
         ["lagos", "khartoum", "johannesburg"],
         EDiseaseType.Yellow,
         0
@@ -429,7 +429,7 @@ export const cities: { [key in CityId]: City } = {
         "johannesburg",
         1020,
         "Johannesburg",
-        { x: 10, y: 15 },
+        { x: 14, y: 16 },
         ["kinshasa", "khartoum"],
         EDiseaseType.Yellow,
         0
