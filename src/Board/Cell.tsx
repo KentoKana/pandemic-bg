@@ -1,21 +1,21 @@
 import { City } from "../Shared/City";
-import { ICoordinates } from "../Shared/Coordinates";
 import { CityCell } from "./CityCell";
 
 interface ICellProps {
-  coordinates: ICoordinates;
   city?: City;
   onCellUpdate: (newCellState: City | undefined) => void;
+  onCitySelect: (selectedCity: City) => void;
 }
-export const Cell = ({ coordinates, city, onCellUpdate }: ICellProps) => {
+export const Cell = ({ city, onCellUpdate, onCitySelect }: ICellProps) => {
   return (
     <div className={`d-flex align-items-center justify-content-center cell`}>
       {!city ? (
-        <>
-          {coordinates.x},{coordinates.y}
-        </>
+        <>{/* {coordinates.x},{coordinates.y} */}</>
       ) : (
         <CityCell
+          onCitySelect={(selectedCity) => {
+            onCitySelect(selectedCity);
+          }}
           onCityUpdate={(newCityState) => {
             onCellUpdate(newCityState);
           }}

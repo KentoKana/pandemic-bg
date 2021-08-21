@@ -8,7 +8,6 @@
   }
   @mixin disease-level($disease-level, $disease-color) {
     @include border($disease-color);
-    color: white !important;
     @if $disease-level == 1 {
       background: darken($disease-color, 1%);
     }
@@ -21,6 +20,7 @@
   }
   &__disease {
     &--red {
+      background: white;
       @include border($disease-red);
       &--level1 {
         @include disease-level(1, $disease-red);
@@ -33,6 +33,7 @@
       }
     }
     &--yellow {
+      background: white;
       @include border($disease-yellow);
       &--level1 {
         @include disease-level(1, $disease-yellow);
@@ -45,6 +46,7 @@
       }
     }
     &--black {
+      background: white;
       @include border($disease-black);
       &--level1 {
         @include disease-level(1, $disease-black);
@@ -57,6 +59,7 @@
       }
     }
     &--blue {
+      background: white;
       @include border($disease-blue);
       &--level1 {
         @include disease-level(1, $disease-blue);

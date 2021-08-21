@@ -1,3 +1,4 @@
+import { City, CityId } from ".";
 import { EDiseaseType } from "../Enums/DiseaseType";
 
 export class CityUtils {
@@ -26,58 +27,50 @@ export class CityUtils {
     static getElementOffset(el: HTMLElement) {
         const rect = el.getBoundingClientRect();
         return {
-            left: rect.left - 130,
-            top: rect.top - window.pageYOffset + 20,
+            left: rect.left - 285,
+            top: rect.top - window.pageYOffset + 5,
             width: rect.width || el.offsetWidth,
             height: rect.height || el.offsetHeight,
         };
     }
 
-    static connectNeighborsWithLine(el1: HTMLElement,
-        el2: HTMLElement,
-        color: string,
-        thickness: number) {
-        // draw a line connecting elements
-        var off1 = this.getElementOffset(el1);
-        var off2 = this.getElementOffset(el2);
-        // bottom right
-        var x1 = off1.left + off1.width;
-        var y1 = off1.top + off1.height;
-        // top right
-        var x2 = off2.left + off2.width;
-        var y2 = off2.top;
-        // distance
-        var length = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-        // center
-        var cx = (x1 + x2) / 2 - length / 2;
-        var cy = (y1 + y2) / 2 - thickness / 2;
-        // angle
-        var angle = Math.atan2(y1 - y2, x1 - x2) * (180 / Math.PI);
-        // make hr
-        var htmlLine =
-            "<div style='z-index: -1; padding:0px; margin:0px; height:" +
-            thickness +
-            "px; background-color:" +
-            color +
-            "; line-height:1px; position:absolute; left:" +
-            cx +
-            "px; top:" +
-            cy +
-            "px; width:" +
-            length +
-            "px; -moz-transform:rotate(" +
-            angle +
-            "deg); -webkit-transform:rotate(" +
-            angle +
-            "deg); -o-transform:rotate(" +
-            angle +
-            "deg); -ms-transform:rotate(" +
-            angle +
-            "deg); transform:rotate(" +
-            angle +
-            "deg);' />";
-        //
-        // alert(htmlLine);
-        document.body.innerHTML += htmlLine;
+    static connectAllCitiesWithLines(ctx: CanvasRenderingContext2D, cities: { [key in CityId]: City }) {
+        if (ctx) {
+            for (const cityKeyAsString in cities) {
+                const cityKey: CityId = cityKeyAsString as CityId;
+                cities[cityKey].neighboringCityIds.forEach((neighborId) => {
+                    const fromCity = this.getCityElementId(cityKey);
+                    const toCity = this.getCityElementId(neighborId);
+                    ctx.strokeStyle = "#e3fe8d65";
+                    ctx?.moveTo(
+                        this.getElementOffset(fromCity).left,
+                        this.getElementOffset(fromCity).top
+                    );
+                    ctx?.lineTo(
+                        this.getElementOffset(toCity).left,
+                        this.getElementOffset(toCity).top
+                    );
+                    ctx?.stroke();
+                });
+            }
+        }
+    }
+
+    static connectCityAndNeighborsWithLines(ctx: CanvasRenderingContext2D, city: City) {
+        ctx.beginPath();
+        city?.neighboringCityIds.forEach((nId) => {
+            const fromCity = CityUtils.getCityElementId(city.id);
+            const toCity = CityUtils.getCityElementId(nId);
+            ctx.strokeStyle = "#e3fe";
+            ctx?.moveTo(
+                CityUtils.getElementOffset(fromCity).left,
+                CityUtils.getElementOffset(fromCity).top
+            );
+            ctx?.lineTo(
+                CityUtils.getElementOffset(toCity).left,
+                CityUtils.getElementOffset(toCity).top
+            );
+            ctx?.stroke();
+        });
     }
 }

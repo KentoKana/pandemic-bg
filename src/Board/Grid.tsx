@@ -13,39 +13,31 @@ interface IGridProps {
 }
 export const Grid = ({ gridSize, cities }: IGridProps) => {
   const [citiesState, setCitiesState] = useState(cities);
+  const [selectedCity, setSelectedCity] = useState<City>();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     if (canvasRef?.current) {
       const ctx = canvasRef.current.getContext("2d");
       if (ctx) {
-        Object.keys(cities).forEach((cityKeyAsString) => {
-          const cityKey: CityId = cityKeyAsString as CityId;
-          cities[cityKey].neighboringCityIds.forEach((neighborId) => {
-            const fromCity = CityUtils.getCityElementId(cityKey);
-            const toCity = CityUtils.getCityElementId(neighborId);
-            ctx.strokeStyle = "#e3fe8d65";
-            ctx?.moveTo(
-              CityUtils.getElementOffset(fromCity).left,
-              CityUtils.getElementOffset(fromCity).top
-            );
-            ctx?.lineTo(
-              CityUtils.getElementOffset(toCity).left,
-              CityUtils.getElementOffset(toCity).top
-            );
-            ctx?.stroke();
-          });
-        });
+        if (selectedCity) {
+          ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+          ctx.beginPath();
+          ctx.shadowBlur = 2.5;
+          ctx.shadowColor = "purple";
+          CityUtils.connectCityAndNeighborsWithLines(ctx, selectedCity);
+        }
       }
     }
-  }, [cities]);
+  }, [cities, selectedCity]);
 
   return (
     <div>
+      {/* Canvas for drawing lines to selected city's neighbor */}
       <canvas
         ref={canvasRef}
         id="canvas"
-        width={1200}
-        height={800}
+        width={900}
+        height={600}
         style={{
           zIndex: -1,
           position: "absolute",
@@ -76,6 +68,9 @@ export const Grid = ({ gridSize, cities }: IGridProps) => {
                     className="d-flex justify-content-center align-items-center"
                   >
                     <Cell
+                      onCitySelect={(selectedCity) => {
+                        setSelectedCity(selectedCity);
+                      }}
                       onCellUpdate={(newCityState) => {
                         if (newCityState) {
                           // Update states of all cities
@@ -96,7 +91,6 @@ export const Grid = ({ gridSize, cities }: IGridProps) => {
                         }
                       }}
                       city={cityForCell}
-                      coordinates={currentCoords}
                     />
                   </div>
                 );
