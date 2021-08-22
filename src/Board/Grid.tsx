@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { City, CityId } from "../Shared/City";
-import { CityUtils } from "../Shared/City/CityUtils";
+import { useEffect, useState } from "react";
+import { City } from "../Shared/City";
 import { ICoordinates } from "../Shared/Coordinates";
+import { cities } from "../Shared/Data/Cities";
 import { Cell } from "./Cell";
-import { GridCanvas } from "./GridCanvas";
 
 interface IGridProps {
   /**
@@ -11,16 +10,18 @@ interface IGridProps {
    */
   selectedCity?: City;
   gridSize: { horizontal: number; vertical: number };
-  cities: { [key in CityId]: City };
   onCitySelect: (selectedCity: City) => void;
 }
-export const Grid = ({
-  gridSize,
-  cities,
-  selectedCity,
-  onCitySelect,
-}: IGridProps) => {
+export const Grid = ({ gridSize, onCitySelect }: IGridProps) => {
   const [citiesState, setCitiesState] = useState(cities);
+  const [selectedCity, setSelectedCity] = useState<City>();
+
+  // Send updated selected city state to parent
+  useEffect(() => {
+    if (selectedCity) {
+      onCitySelect(citiesState[selectedCity.id]);
+    }
+  }, [citiesState, selectedCity, onCitySelect]);
 
   return (
     <>
@@ -34,7 +35,6 @@ export const Grid = ({
                 {new Array(gridSize.horizontal).fill(null).map((_, hIndex) => {
                   // Grid logic starts here
                   const currentCoords: ICoordinates = { x: hIndex, y: vIndex };
-
                   // Get City if it exists for the current cell
                   const cityForCell = City.getCityByCoordinates(
                     citiesState,
@@ -48,7 +48,7 @@ export const Grid = ({
                     >
                       <Cell
                         onCitySelect={(selectedCity) => {
-                          onCitySelect(selectedCity);
+                          setSelectedCity(selectedCity);
                         }}
                         onCellUpdate={(newCityState) => {
                           if (newCityState) {

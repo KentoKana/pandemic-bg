@@ -1,3 +1,22 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
+.text-disease {
+  &--red {
+    color: darken($disease-red, 10%);
+  }
+  &--blue {
+    color: darken($disease-blue, 10%);
+  }
+  &--black {
+    color: darken($disease-black, 15%);
+  }
+  &--yellow {
+    color: darken($disease-yellow, 20%);
+  }
+}
+
+.text-mute {
+  color: $muted;
+}
