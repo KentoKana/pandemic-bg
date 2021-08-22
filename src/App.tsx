@@ -1,12 +1,12 @@
+import { observer } from "mobx-react-lite";
 import { Game } from "./Game";
-import { cities } from "./Shared/Data/Cities";
 
-function App() {
+const App = observer(() => {
   return (
     <div className="App">
-      <Game gridSize={{ horizontal: 30, vertical: 20 }} cities={cities} />
+      <Game />
     </div>
   );
-}
+});
 
 export default App;

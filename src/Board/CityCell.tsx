@@ -1,21 +1,36 @@
+import { observer } from "mobx-react-lite";
 import { City } from "../Shared/City";
 import { CityUtils } from "../Shared/City/CityUtils";
+import { useStores } from "../Shared/Stores";
 import { Tooltip } from "../UI/Tooltip";
 
 interface ICityCellProps {
   city: City;
-  onCityUpdate: (newCityState: City) => void;
-  onCitySelect: (selectedCity: City) => void;
 }
 
-export const CityCell = ({
-  city,
-  onCityUpdate,
-  onCitySelect,
-}: ICityCellProps) => {
+export const CityCell = observer(({ city }: ICityCellProps) => {
+  const { gameStore } = useStores();
+
+  const handleDiseaseCountUpdate = (newCityState: City) => {
+    const updatedNeighbors = City.getNeighborsAfterOutbreak(
+      newCityState,
+      gameStore.cities,
+      {},
+      []
+    );
+    newCityState.hasOutbreak = false;
+    gameStore.cities = {
+      ...gameStore.cities,
+      [newCityState.id]: newCityState,
+      ...updatedNeighbors,
+    };
+  };
   const cityClassName = city
     ? "cursor-pointer text-primary d-flex align-items-center justify-content-center city position-relative " +
-      CityUtils.getDiseasedCityClassName(city?.diseaseType, city.diseaseCount)
+      CityUtils.getDiseasedCityClassName(
+        gameStore.cities[city.id]?.diseaseType,
+        gameStore.cities[city.id].diseaseCount
+      )
     : "";
   return (
     <>
@@ -23,7 +38,7 @@ export const CityCell = ({
         id={`${city?.id ?? ""}`}
         className={cityClassName}
         onClick={() => {
-          onCitySelect(city);
+          gameStore.currentSelectedCity = gameStore.cities[city.id];
         }}
       >
         {/* {city.coordinates.x},{city.coordinates.y} */}
@@ -44,18 +59,16 @@ export const CityCell = ({
           <div>
             <button
               onClick={() => {
-                const clone = city.clone();
-                clone.diseaseCount += 1;
-                onCityUpdate(clone);
+                gameStore.cities[city.id].diseaseCount += 1;
+                handleDiseaseCountUpdate(gameStore.cities[city.id]);
               }}
             >
               +
             </button>
             <button
               onClick={() => {
-                const clone = city.clone();
-                clone.diseaseCount -= 1;
-                onCityUpdate(clone);
+                gameStore.cities[city.id].diseaseCount -= 1;
+                handleDiseaseCountUpdate(gameStore.cities[city.id]);
               }}
             >
               -
@@ -71,4 +84,4 @@ export const CityCell = ({
       </div>
     </>
   );
-};
+});

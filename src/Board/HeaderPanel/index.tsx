@@ -1,13 +1,22 @@
 import { faVirus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
 import { Col, Container, Row } from "reactstrap";
-import { City } from "../../Shared/City";
 import { EDiseaseType } from "../../Shared/Enums/DiseaseType";
+import { useStores } from "../../Shared/Stores";
 
-interface IHeaderPanelProps {
-  selectedCity?: City;
-}
-export const HeaderPanel = ({ selectedCity }: IHeaderPanelProps) => {
+export const HeaderPanel = observer(() => {
+  const { gameStore } = useStores();
+
+  // Update selected city state via cities object
+  useEffect(() => {
+    if (gameStore.currentSelectedCity) {
+      gameStore.currentSelectedCity =
+        gameStore.cities[gameStore.currentSelectedCity.id];
+    }
+  }, [gameStore, gameStore.cities, gameStore.currentSelectedCity]);
+
   const getBgColorClassName = (diseaseType?: EDiseaseType) => {
     switch (diseaseType) {
       case EDiseaseType.Red:
@@ -27,10 +36,10 @@ export const HeaderPanel = ({ selectedCity }: IHeaderPanelProps) => {
     <Container>
       <div className="header-panel d-flex justify-content-between">
         <div></div>
-        {selectedCity && (
+        {gameStore.currentSelectedCity && (
           <Row>
             <Col className="text-nowrap">
-              Current City: {selectedCity?.name}
+              Current City: {gameStore.currentSelectedCity?.name}
             </Col>
             <Col className="text-nowrap">
               Infection Level:{" "}
@@ -39,8 +48,10 @@ export const HeaderPanel = ({ selectedCity }: IHeaderPanelProps) => {
                   <span
                     key={index}
                     className={
-                      selectedCity?.diseaseCount > index
-                        ? getBgColorClassName(selectedCity?.diseaseType)
+                      gameStore.currentSelectedCity!.diseaseCount > index
+                        ? getBgColorClassName(
+                            gameStore.currentSelectedCity?.diseaseType
+                          )
                         : "text-mute"
                     }
                   >
@@ -54,4 +65,4 @@ export const HeaderPanel = ({ selectedCity }: IHeaderPanelProps) => {
       </div>
     </Container>
   );
-};
+});

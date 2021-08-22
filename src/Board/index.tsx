@@ -1,35 +1,26 @@
-import { useState } from "react";
+import { observer } from "mobx-react-lite";
+import { useEffect, useState } from "react";
 import { City } from "../Shared/City";
-import { Cities } from "../Shared/City/Cities";
+import { cities } from "../Shared/Data/Cities";
+import { useStores } from "../Shared/Stores";
 import { FooterPanel } from "./FooterPanel";
 import { Grid } from "./Grid";
 import { GridCanvas } from "./GridCanvas";
 import { HeaderPanel } from "./HeaderPanel";
 
-interface IBoardProps {
-  gridSize: { horizontal: number; vertical: number };
-  cities: Cities;
-}
-
-export const Board = ({ gridSize, cities }: IBoardProps) => {
-  const [selectedCity, setSelectedCity] = useState<City>();
+export const Board = observer(() => {
+  const { gameStore } = useStores();
 
   return (
     <div className="d-flex align-items-center justify-content-center flex-column">
-      <HeaderPanel selectedCity={selectedCity} />
+      <HeaderPanel />
       <div className="position-relative">
         <GridCanvas cities={cities} />
         {/* Canvas for drawing lines to selected city's neighbor */}
-        <GridCanvas selectedCity={selectedCity} />
-        <Grid
-          selectedCity={selectedCity}
-          gridSize={gridSize}
-          onCitySelect={(newSelectedCity) => {
-            setSelectedCity(newSelectedCity);
-          }}
-        />
+        <GridCanvas selectedCity={gameStore.currentSelectedCity} />
+        <Grid />
       </div>
       <FooterPanel />
     </div>
   );
-};
+});
