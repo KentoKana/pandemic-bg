@@ -31,37 +31,36 @@ export const CityCell = ({
           {city && (
             <>
               <div>{city.name}</div>
-              <div>{city.population}</div>
-              <div>{city.diseaseType}</div>
-              <div className="text-danger">{city.diseaseCount}</div>
-              <div>
-                {city.neighboringCityIds.map((id) => {
-                  return <div key={id}>{id}</div>;
-                })}
+              <div>Population: {city.population}</div>
+              <div>Disease Type: {city.diseaseType}</div>
+              <div className="text-danger">
+                Infection Level: {city.diseaseCount}
               </div>
               <span>
                 {city.coordinates.x},{city.coordinates.y}
               </span>
             </>
           )}
-          <button
-            onClick={() => {
-              const clone = city.clone();
-              clone.diseaseCount += 1;
-              onCityUpdate(clone);
-            }}
-          >
-            +
-          </button>
-          <button
-            onClick={() => {
-              const clone = city.clone();
-              clone.diseaseCount -= 1;
-              onCityUpdate(clone);
-            }}
-          >
-            -
-          </button>
+          <div>
+            <button
+              onClick={() => {
+                const clone = city.clone();
+                clone.diseaseCount += 1;
+                onCityUpdate(clone);
+              }}
+            >
+              +
+            </button>
+            <button
+              onClick={() => {
+                const clone = city.clone();
+                clone.diseaseCount -= 1;
+                onCityUpdate(clone);
+              }}
+            >
+              -
+            </button>
+          </div>
         </Tooltip>
         <div
           className="position-absolute text-nowrap"

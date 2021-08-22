@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { City, CityId } from "../Shared/City";
+import { City } from "../Shared/City";
+import { Cities } from "../Shared/City/Cities";
 import { FooterPanel } from "./FooterPanel";
 import { Grid } from "./Grid";
 import { GridCanvas } from "./GridCanvas";
@@ -7,7 +8,7 @@ import { HeaderPanel } from "./HeaderPanel";
 
 interface IBoardProps {
   gridSize: { horizontal: number; vertical: number };
-  cities: { [key in CityId]: City };
+  cities: Cities;
 }
 
 export const Board = ({ gridSize, cities }: IBoardProps) => {

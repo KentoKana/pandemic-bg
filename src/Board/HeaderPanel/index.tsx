@@ -29,12 +29,15 @@ export const HeaderPanel = ({ selectedCity }: IHeaderPanelProps) => {
         <div></div>
         {selectedCity && (
           <Row>
-            <Col>{selectedCity?.name}</Col>
+            <Col className="text-nowrap">
+              Current City: {selectedCity?.name}
+            </Col>
             <Col className="text-nowrap">
               Infection Level:{" "}
               {Array.from(Array(3), () => 0).map((_, index) => {
                 return (
                   <span
+                    key={index}
                     className={
                       selectedCity?.diseaseCount > index
                         ? getBgColorClassName(selectedCity?.diseaseType)

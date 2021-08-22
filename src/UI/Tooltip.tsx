@@ -11,7 +11,7 @@ export const Tooltip = ({ target, children, tooltipHeader }: ITooltip) => {
   return (
     <UncontrolledPopover
       target={target}
-      trigger={"legacy"}
+      trigger={"hover"}
       style={{ minWidth: 200 }}
     >
       {tooltipHeader && <PopoverHeader>{tooltipHeader}</PopoverHeader>}

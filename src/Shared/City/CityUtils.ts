@@ -1,5 +1,6 @@
 import { City, CityId } from ".";
 import { EDiseaseType } from "../Enums/DiseaseType";
+import { Cities } from "./Cities";
 
 export class CityUtils {
 
@@ -38,7 +39,7 @@ export class CityUtils {
         };
     }
 
-    static connectAllCitiesWithLines(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, cities: { [key in CityId]: City }) {
+    static connectAllCitiesWithLines(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, cities: Cities) {
         if (ctx) {
             for (const cityKeyAsString in cities) {
                 const cityKey: CityId = cityKeyAsString as CityId;

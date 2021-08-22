@@ -1,9 +1,9 @@
 import { Board } from "../Board";
-import { City, CityId } from "../Shared/City";
+import { Cities } from "../Shared/City/Cities";
 
 interface IGameProps {
   gridSize: { horizontal: number; vertical: number };
-  cities: { [key in CityId]: City };
+  cities: Cities;
 }
 
 export const Game = ({ gridSize, cities }: IGameProps) => {

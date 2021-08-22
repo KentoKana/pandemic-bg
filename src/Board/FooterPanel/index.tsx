@@ -1,5 +1,3 @@
-import { CityCard } from "../../UI/CityCard";
-
 export const FooterPanel = () => {
   return (
     <div

@@ -1,5 +1,6 @@
 import { ICoordinates } from "../Coordinates";
 import { EDiseaseType } from "../Enums/DiseaseType";
+import { Cities } from "./Cities";
 
 /**
  * City class.
@@ -134,9 +135,7 @@ export class City {
      * @returns {{neighborKey: City }} Updated neighboring cities state after outbreak 
      */
     static getNeighborsAfterOutbreak(currentCity: City,
-        allCities: {
-            [key in CityId]: City;
-        },
+        allCities: Cities,
         neighborsToUpdate: { [key: string]: City },
         cityIdsAlreadyLookedAt: CityId[]) {
         // Keep track of cities that outbreaks have already been applied to

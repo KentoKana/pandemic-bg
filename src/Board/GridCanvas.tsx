@@ -1,10 +1,11 @@
 import { useEffect, useRef } from "react";
-import { City, CityId } from "../Shared/City";
+import { City } from "../Shared/City";
+import { Cities } from "../Shared/City/Cities";
 import { CityUtils } from "../Shared/City/CityUtils";
 
 interface IGridCanvasProps {
   selectedCity?: City;
-  cities?: { [key in CityId]: City };
+  cities?: Cities;
 }
 export const GridCanvas = ({ selectedCity, cities }: IGridCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);

@@ -1,7 +1,8 @@
-import { City, CityId } from "../City";
+import { City } from "../City";
+import { Cities } from "../City/Cities";
 import { EDiseaseType } from "../Enums/DiseaseType";
 
-export const cities: { [key in CityId]: City } = {
+export const cities: Cities = {
     atlanta: new City(
         "atlanta",
         10000,
