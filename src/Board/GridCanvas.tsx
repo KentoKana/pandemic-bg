@@ -15,7 +15,7 @@ export const GridCanvas = ({ selectedCity, cities }: IGridCanvasProps) => {
       if (ctx) {
         // Draw lines between all cities through its neighbors
         if (cities) {
-          CityUtils.connectAllCitiesWithLines(ctx, cities);
+          CityUtils.connectAllCitiesWithLines(canvasRef.current, ctx, cities);
         }
         // Draw lines between selected city and its neighbors
         if (selectedCity) {
@@ -23,7 +23,11 @@ export const GridCanvas = ({ selectedCity, cities }: IGridCanvasProps) => {
           ctx.beginPath();
           ctx.shadowBlur = 2.5;
           ctx.shadowColor = "purple";
-          CityUtils.connectCityAndNeighborsWithLines(ctx, selectedCity);
+          CityUtils.connectCityAndNeighborsWithLines(
+            canvasRef.current,
+            ctx,
+            selectedCity
+          );
         }
       }
     }
@@ -36,6 +40,7 @@ export const GridCanvas = ({ selectedCity, cities }: IGridCanvasProps) => {
       width={900}
       height={600}
       style={{
+        display: "block",
         zIndex: -1,
         position: "absolute",
         left: 0,

@@ -1,4 +1,3 @@
-import "./App.css";
 import { Game } from "./Game";
 import { cities } from "./Shared/Data/Cities";
 
