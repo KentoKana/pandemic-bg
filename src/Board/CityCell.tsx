@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { City } from "../Shared/City";
 import { CityUtils } from "../Shared/City/CityUtils";
+import { GameUtils } from "../Shared/Game/GameUtils";
 import { useStores } from "../Shared/Stores";
 import { Tooltip } from "../UI/Tooltip";
 
@@ -11,14 +12,19 @@ interface ICityCellProps {
 export const CityCell = observer(({ city }: ICityCellProps) => {
   const { gameStore } = useStores();
 
-  const handleDiseaseCountUpdate = (newCityState: City) => {
-    const updatedNeighbors = City.getNeighborsAfterOutbreak(
-      newCityState,
-      gameStore.cities,
-      {},
-      []
-    );
-    newCityState.hasOutbreak = false;
+  const handleDiseaseCountUpdate = (
+    diseaseCount: number,
+    newCityState: City
+  ) => {
+    let updatedNeighbors: { [key: string]: City } | undefined;
+    if (diseaseCount > 3) {
+      updatedNeighbors = GameUtils.getCityNeighborsAfterOutbreak(
+        newCityState,
+        gameStore.cities,
+        {},
+        []
+      );
+    }
     gameStore.cities = {
       ...gameStore.cities,
       [newCityState.id]: newCityState,
@@ -60,7 +66,10 @@ export const CityCell = observer(({ city }: ICityCellProps) => {
             <button
               onClick={() => {
                 gameStore.cities[city.id].diseaseCount += 1;
-                handleDiseaseCountUpdate(gameStore.cities[city.id]);
+                handleDiseaseCountUpdate(
+                  gameStore.cities[city.id].diseaseCount + 1,
+                  gameStore.cities[city.id]
+                );
               }}
             >
               +
@@ -68,7 +77,10 @@ export const CityCell = observer(({ city }: ICityCellProps) => {
             <button
               onClick={() => {
                 gameStore.cities[city.id].diseaseCount -= 1;
-                handleDiseaseCountUpdate(gameStore.cities[city.id]);
+                handleDiseaseCountUpdate(
+                  gameStore.cities[city.id].diseaseCount - 1,
+                  gameStore.cities[city.id]
+                );
               }}
             >
               -

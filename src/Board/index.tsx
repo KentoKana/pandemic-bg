@@ -1,6 +1,4 @@
 import { observer } from "mobx-react-lite";
-import { useEffect, useState } from "react";
-import { City } from "../Shared/City";
 import { cities } from "../Shared/Data/Cities";
 import { useStores } from "../Shared/Stores";
 import { FooterPanel } from "./FooterPanel";
@@ -15,6 +13,7 @@ export const Board = observer(() => {
     <div className="d-flex align-items-center justify-content-center flex-column">
       <HeaderPanel />
       <div className="position-relative">
+        {/* Canvas for drawing lines between all cities through its neighbors */}
         <GridCanvas cities={cities} />
         {/* Canvas for drawing lines to selected city's neighbor */}
         <GridCanvas selectedCity={gameStore.currentSelectedCity} />

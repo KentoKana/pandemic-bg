@@ -14,9 +14,9 @@ export class GameStore {
         this.numberOfPlayers = numberOfPlayers;
     }
     public gridSize: { horizontal: number, vertical: number } = { horizontal: 30, vertical: 20 }
-    public _cities: Cities;
+    private _cities: Cities;
     private _currentSelectedCity?: City;
-    private _currentOutbreakCount: number = 0;
+    private _outbreakCount: number = 0;
     private _hasLostGame: boolean = false;
     private _infectionRate: number = 2;
     public numberOfEpidemicCardsDrawn = 0;
@@ -40,8 +40,16 @@ export class GameStore {
         })
     }
 
+    get outbreakCount() {
+        return this._outbreakCount;
+    }
+    set outbreakCount(outbreakCount: number) {
+        this._outbreakCount = outbreakCount;
+    }
+
+
     get hasLostGame(): boolean {
-        if (this._currentOutbreakCount > 7) {
+        if (this._outbreakCount > 7) {
             this._hasLostGame = true;
         }
         return this._hasLostGame;

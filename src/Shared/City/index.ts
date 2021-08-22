@@ -1,6 +1,5 @@
 import { ICoordinates } from "../Coordinates";
 import { EDiseaseType } from "../Enums/DiseaseType";
-import { Cities } from "./Cities";
 
 /**
  * City class.
@@ -123,51 +122,6 @@ export class City {
                 city.coordinates.x === coordinates.x &&
                 city.coordinates.y === coordinates.y
         );
-    }
-
-    /**
-     * Get cities with updated disease count after an outbreak
-     *
-     * @param currentCity 
-     * @param allCities 
-     * @param neighborsToUpdate 
-     * @param cityIdsAlreadyLookedAt - 
-     * @returns {{neighborKey: City }} Updated neighboring cities state after outbreak 
-     */
-    static getNeighborsAfterOutbreak(currentCity: City,
-        allCities: Cities,
-        neighborsToUpdate: { [key: string]: City },
-        cityIdsAlreadyLookedAt: CityId[]) {
-        // Keep track of cities that outbreaks have already been applied to
-        cityIdsAlreadyLookedAt.push(currentCity.id);
-
-        // Base case: If the city does not have an outbreak status and the overflow of outbreak disease count have not been applied to this city,
-        // return the state of neighbors post outbreak
-        if (
-            !currentCity.hasOutbreak &&
-            cityIdsAlreadyLookedAt.some(
-                (cala) => !currentCity.neighboringCityIds.some((c) => c === cala)
-            )
-        )
-            return neighborsToUpdate;
-
-        // Iterate through each neighbors of the current city.
-        // If neighboring cities have not already been traversed, apply the disease count overflow logic.
-        currentCity.neighboringCityIds.forEach((neighborKey) => {
-            neighborsToUpdate[neighborKey] = allCities[neighborKey];
-
-            if (!cityIdsAlreadyLookedAt.some((cala) => cala === neighborKey)) {
-                neighborsToUpdate[neighborKey].diseaseCount += 1;
-                return this.getNeighborsAfterOutbreak(
-                    neighborsToUpdate[neighborKey],
-                    allCities,
-                    neighborsToUpdate,
-                    cityIdsAlreadyLookedAt
-                );
-            }
-        });
-
-        return neighborsToUpdate;
     }
 
     /**
