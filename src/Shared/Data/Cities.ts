@@ -17,7 +17,7 @@ export const cities: Cities = {
         1000,
         "Chicago",
         { x: 3, y: 2 },
-        ["sanfrancisco", "atlanta", "montreal"],
+        ["sanfrancisco", "atlanta", "montreal", "losangeles"],
         EDiseaseType.Blue,
         0
     ),

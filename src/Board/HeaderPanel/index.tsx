@@ -34,7 +34,7 @@ export const HeaderPanel = observer(() => {
 
   return (
     <div className="header-panel d-flex mb-3">
-      <Container className="d-flex align-items-center justify-content-end">
+      <Container className="d-flex align-items-center justify-content-end py-3">
         <div>
           <div>
             Outbreaks:{" "}

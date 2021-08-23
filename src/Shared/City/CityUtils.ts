@@ -46,7 +46,7 @@ export class CityUtils {
                 cities[cityKey].neighboringCityIds.forEach((neighborId) => {
                     const fromCity = this.getCityElementId(cityKey);
                     const toCity = this.getCityElementId(neighborId);
-                    ctx.strokeStyle = "#e3fe8d65";
+                    ctx.strokeStyle = "#a2e78d";
                     ctx?.moveTo(
                         this.getElementOffset(fromCity, canvas,).left,
                         this.getElementOffset(fromCity, canvas).top
