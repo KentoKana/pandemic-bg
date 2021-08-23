@@ -12,6 +12,10 @@ export const Game = observer(() => {
   }, [gameStore.cities, gameStore]);
 
   // Check if players lost
-  useEffect(() => {}, [gameStore.hasLostGame]);
+  useEffect(() => {
+    if (gameStore.hasLostGame) {
+      alert("Game Over");
+    }
+  }, [gameStore.hasLostGame]);
   return <Board />;
 });

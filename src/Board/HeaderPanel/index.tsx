@@ -2,7 +2,7 @@ import { faVirus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
-import { Col, Container, Row } from "reactstrap";
+import { Container } from "reactstrap";
 import { EDiseaseType } from "../../Shared/Enums/DiseaseType";
 import { useStores } from "../../Shared/Stores";
 
@@ -33,22 +33,37 @@ export const HeaderPanel = observer(() => {
   };
 
   return (
-    <Container>
-      <div className="header-panel d-flex justify-content-between">
-        <div></div>
-        {gameStore.currentSelectedCity && (
-          <Row>
-            <Col className="text-nowrap">
-              Current City: {gameStore.currentSelectedCity?.name}
-            </Col>
-            <Col className="text-nowrap">
+    <div className="header-panel d-flex mb-3">
+      <Container className="d-flex align-items-center justify-content-end">
+        <div>
+          <div>
+            Outbreaks:{" "}
+            {Array.from(Array(8), () => 0).map((_, index) => {
+              return (
+                <span
+                  key={index}
+                  className={
+                    gameStore.outbreakCount > index
+                      ? "text-outbreak"
+                      : "text-mute"
+                  }
+                >
+                  <FontAwesomeIcon icon={faVirus} />
+                </span>
+              );
+            })}
+          </div>
+          <div className="text-nowrap">
+            <div>Current City: {gameStore.currentSelectedCity?.name}</div>
+            <div>
               Infection Level:{" "}
               {Array.from(Array(3), () => 0).map((_, index) => {
                 return (
                   <span
                     key={index}
                     className={
-                      gameStore.currentSelectedCity!.diseaseCount > index
+                      gameStore.currentSelectedCity &&
+                      gameStore.currentSelectedCity.diseaseCount > index
                         ? getBgColorClassName(
                             gameStore.currentSelectedCity?.diseaseType
                           )
@@ -59,10 +74,10 @@ export const HeaderPanel = observer(() => {
                   </span>
                 );
               })}
-            </Col>
-          </Row>
-        )}
-      </div>
-    </Container>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </div>
   );
 });
