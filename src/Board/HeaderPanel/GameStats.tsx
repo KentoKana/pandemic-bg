@@ -23,7 +23,7 @@ export const GameStats = observer(() => {
           );
         })}
       </div>
-      <div>Infection Rate:</div>
+      <div>Infection Rate: {gameStore.infectionRate}</div>
     </>
   );
 });

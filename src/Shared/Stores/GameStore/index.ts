@@ -17,14 +17,14 @@ export class GameStore {
         this.numberOfPlayers = numberOfPlayers;
         this._diseaseStates = diseaseStates;
     }
-    public gridSize: { horizontal: number, vertical: number } = { horizontal: 30, vertical: 20 }
+    readonly gridSize: { horizontal: number, vertical: number } = { horizontal: 30, vertical: 20 }
     private _cities: Cities;
     private _currentSelectedCity?: City;
     private _outbreakCount: number = 0;
     private _hasLostGame: boolean = false;
     private _infectionRate: number = 2;
     public numberOfEpidemicCardsDrawn = 0;
-    public numberOfPlayers = 1;
+    readonly numberOfPlayers: number = 1;
     private _diseaseStates: { [key in EDiseaseType]: Disease };
 
     get cities() {

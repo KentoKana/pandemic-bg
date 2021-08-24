@@ -6,8 +6,7 @@ export class Disease {
         this.diseaseCount = diseaseCount;
     }
 
-    public diseaseType: EDiseaseType;
+    readonly diseaseType: EDiseaseType;
     public isCured: boolean = false;
     public diseaseCount: number;
-
 }
