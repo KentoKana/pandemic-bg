@@ -15,7 +15,7 @@ export class GameStore {
         this.gridSize = gridSize;
         this._cities = cities;
         this.numberOfPlayers = numberOfPlayers;
-        this._diseaseStates = diseaseStates
+        this._diseaseStates = diseaseStates;
     }
     public gridSize: { horizontal: number, vertical: number } = { horizontal: 30, vertical: 20 }
     private _cities: Cities;
@@ -52,39 +52,46 @@ export class GameStore {
         this._outbreakCount = outbreakCount;
     }
 
-
     get hasLostGame(): boolean {
         if (this._outbreakCount > 7) {
-            this._hasLostGame = true;
+            runInAction(() => {
+                this._hasLostGame = true;
+            })
         }
         return this._hasLostGame;
     }
 
     get infectionRate(): number {
-        for (let i = 0; i < this.numberOfEpidemicCardsDrawn; i++) {
-            if (i <= 2) {
-                this._infectionRate = 2
-            } else if (i <= 4) {
-                this._infectionRate = 3
-            } else {
-                this._infectionRate = 4
+        runInAction(() => {
+            for (let i = 0; i < this.numberOfEpidemicCardsDrawn; i++) {
+                if (i <= 2) {
+                    this._infectionRate = 2
+                } else if (i <= 4) {
+                    this._infectionRate = 3
+                } else {
+                    this._infectionRate = 4
+                }
             }
-        }
+        })
         return this._infectionRate;
     }
 
     get diseaseStates() {
         for (const diseaseKey in this._diseaseStates) {
             const diseaseType = parseInt(diseaseKey) as EDiseaseType;
-            this._diseaseStates[diseaseType].diseaseCount = 0;
+            runInAction(() => {
+                this._diseaseStates[diseaseType].diseaseCount = 0;
+            })
         }
         for (const key in this.cities) {
             const cityKey = key as CityId;
             for (const diseaseKey in this._diseaseStates) {
                 const diseaseType = parseInt(diseaseKey) as EDiseaseType;
-                if (this.cities[cityKey].diseaseType === diseaseType) {
-                    this._diseaseStates[diseaseType].diseaseCount +=
-                        this.cities[cityKey].diseaseCount;
+                if (this._cities[cityKey].diseaseType === diseaseType) {
+                    runInAction(() => {
+                        this._diseaseStates[diseaseType].diseaseCount +=
+                            this._cities[cityKey].diseaseCount;
+                    })
                 }
             }
         }

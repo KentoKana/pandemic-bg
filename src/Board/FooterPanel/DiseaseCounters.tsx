@@ -15,13 +15,16 @@ export const DiseaseCounters = observer(() => {
   >(gameStore.diseaseStates);
   useEffect(() => {
     setDiseaseStates(gameStore.diseaseStates);
-  }, [gameStore.cities, gameStore.diseaseStates]);
+  }, [gameStore.cities, gameStore]);
+
   return (
     <Row>
       {Object.keys(diseaseStates).map((diseaseKey) => {
         const diseaseType = parseInt(diseaseKey) as EDiseaseType;
+
         return (
           <Col
+            key={diseaseKey}
             style={{ width: 100, height: 100 }}
             className="position-relative d-flex justify-content-center align-items-center"
           >

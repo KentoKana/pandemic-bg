@@ -1,9 +1,11 @@
 import { faVirus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { observer } from "mobx-react-lite";
 import { useStores } from "../../Shared/Stores";
 
-export const GameStats = () => {
+export const GameStats = observer(() => {
   const { gameStore } = useStores();
+
   return (
     <>
       <div>
@@ -24,4 +26,4 @@ export const GameStats = () => {
       <div>Infection Rate:</div>
     </>
   );
-};
+});

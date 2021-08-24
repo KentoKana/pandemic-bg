@@ -1,10 +1,19 @@
 import { faVirus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
 import { DiseaseUtils } from "../../Shared/Disease/DiseaseUtils";
 import { useStores } from "../../Shared/Stores";
 
-export const CityStats = () => {
+export const CityStats = observer(() => {
   const { gameStore } = useStores();
+  // Update selected city state via cities object
+  useEffect(() => {
+    if (gameStore.currentSelectedCity) {
+      gameStore.currentSelectedCity =
+        gameStore.cities[gameStore.currentSelectedCity.id];
+    }
+  }, [gameStore, gameStore.cities, gameStore.currentSelectedCity]);
   return (
     <div className="d-flex flex-column align-items-end">
       <div>
@@ -34,4 +43,4 @@ export const CityStats = () => {
       </div>
     </div>
   );
-};
+});
