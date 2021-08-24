@@ -1,7 +1,7 @@
 import { EDiseaseType } from "../Enums/DiseaseType";
 
 export class DiseaseUtils {
-    static getBgColorClassName(diseaseType?: EDiseaseType) {
+    static getDiseaseColorClassName(diseaseType?: EDiseaseType) {
         switch (diseaseType) {
             case EDiseaseType.Red:
                 return "text-disease--red";

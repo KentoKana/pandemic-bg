@@ -50,7 +50,7 @@ export const HeaderPanel = observer(() => {
                     className={
                       gameStore.currentSelectedCity &&
                       gameStore.currentSelectedCity.diseaseCount > index
-                        ? DiseaseUtils.getBgColorClassName(
+                        ? DiseaseUtils.getDiseaseColorClassName(
                             gameStore.currentSelectedCity?.diseaseType
                           )
                         : "text-mute"
