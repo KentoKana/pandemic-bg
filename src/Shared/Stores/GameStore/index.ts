@@ -1,17 +1,21 @@
 import { Cities } from "../../City/Cities"
 import { makeAutoObservable, runInAction } from "mobx"
-import { City } from "../../City";
+import { City, CityId } from "../../City";
+import { Disease } from "../../Disease";
+import { EDiseaseType } from "../../Enums/DiseaseType";
 
 export class GameStore {
     constructor(
         gridSize: { horizontal: number, vertical: number },
         cities: Cities,
         numberOfPlayers: number,
+        diseaseStates: { [key in EDiseaseType]: Disease }
     ) {
         makeAutoObservable(this);
         this.gridSize = gridSize;
         this._cities = cities;
         this.numberOfPlayers = numberOfPlayers;
+        this._diseaseStates = diseaseStates
     }
     public gridSize: { horizontal: number, vertical: number } = { horizontal: 30, vertical: 20 }
     private _cities: Cities;
@@ -21,6 +25,7 @@ export class GameStore {
     private _infectionRate: number = 2;
     public numberOfEpidemicCardsDrawn = 0;
     public numberOfPlayers = 1;
+    private _diseaseStates: { [key in EDiseaseType]: Disease };
 
     get cities() {
         return this._cities;
@@ -66,5 +71,23 @@ export class GameStore {
             }
         }
         return this._infectionRate;
+    }
+
+    get diseaseStates() {
+        for (const diseaseKey in this._diseaseStates) {
+            const diseaseType = parseInt(diseaseKey) as EDiseaseType;
+            this._diseaseStates[diseaseType].diseaseCount = 0;
+        }
+        for (const key in this.cities) {
+            const cityKey = key as CityId;
+            for (const diseaseKey in this._diseaseStates) {
+                const diseaseType = parseInt(diseaseKey) as EDiseaseType;
+                if (this.cities[cityKey].diseaseType === diseaseType) {
+                    this._diseaseStates[diseaseType].diseaseCount +=
+                        this.cities[cityKey].diseaseCount;
+                }
+            }
+        }
+        return this._diseaseStates;
     }
 }

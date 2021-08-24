@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { Container } from "reactstrap";
+import { DiseaseUtils } from "../../Shared/Disease/DiseaseUtils";
 import { EDiseaseType } from "../../Shared/Enums/DiseaseType";
 import { useStores } from "../../Shared/Stores";
 
@@ -16,21 +17,6 @@ export const HeaderPanel = observer(() => {
         gameStore.cities[gameStore.currentSelectedCity.id];
     }
   }, [gameStore, gameStore.cities, gameStore.currentSelectedCity]);
-
-  const getBgColorClassName = (diseaseType?: EDiseaseType) => {
-    switch (diseaseType) {
-      case EDiseaseType.Red:
-        return "text-disease--red";
-      case EDiseaseType.Blue:
-        return "text-disease--blue";
-      case EDiseaseType.Yellow:
-        return "text-disease--yellow";
-      case EDiseaseType.Black:
-        return "text-disease--black";
-      default:
-        return "";
-    }
-  };
 
   return (
     <div className="header-panel d-flex mb-3">
@@ -64,7 +50,7 @@ export const HeaderPanel = observer(() => {
                     className={
                       gameStore.currentSelectedCity &&
                       gameStore.currentSelectedCity.diseaseCount > index
-                        ? getBgColorClassName(
+                        ? DiseaseUtils.getBgColorClassName(
                             gameStore.currentSelectedCity?.diseaseType
                           )
                         : "text-mute"

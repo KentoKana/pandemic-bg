@@ -1,3 +1,4 @@
+import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { Board } from "../Board";
@@ -6,8 +7,8 @@ import { useStores } from "../Shared/Stores";
 
 export const Game = observer(() => {
   const { gameStore } = useStores();
-  // Update outbreak count
   useEffect(() => {
+    // Update Outbreak count
     gameStore.outbreakCount = GameUtils.getOutbreakCount(gameStore);
   }, [gameStore.cities, gameStore]);
 
@@ -17,5 +18,6 @@ export const Game = observer(() => {
       alert("Game Over");
     }
   }, [gameStore.hasLostGame]);
+
   return <Board />;
 });
