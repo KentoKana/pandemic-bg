@@ -2,7 +2,7 @@ import { faVirus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
-import { Col } from "reactstrap";
+import { Col, Row } from "reactstrap";
 import { Disease } from "../../Shared/Disease";
 import { DiseaseUtils } from "../../Shared/Disease/DiseaseUtils";
 import { EDiseaseType } from "../../Shared/Enums/DiseaseType";
@@ -17,7 +17,7 @@ export const DiseaseCounters = observer(() => {
     setDiseaseStates(gameStore.diseaseStates);
   }, [gameStore.cities, gameStore.diseaseStates]);
   return (
-    <>
+    <Row>
       {Object.keys(diseaseStates).map((diseaseKey) => {
         const diseaseType = parseInt(diseaseKey) as EDiseaseType;
         return (
@@ -43,6 +43,6 @@ export const DiseaseCounters = observer(() => {
           </Col>
         );
       })}
-    </>
+    </Row>
   );
 });

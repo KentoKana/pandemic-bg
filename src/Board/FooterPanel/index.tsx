@@ -1,6 +1,5 @@
 import { observer } from "mobx-react-lite";
 import { Col, Container, Row } from "reactstrap";
-import { DiseaseCounters } from "./DiseaseCounters";
 
 export const FooterPanel = observer(() => {
   return (
@@ -15,13 +14,6 @@ export const FooterPanel = observer(() => {
     >
       <Container>
         <Row>
-          <Col></Col>
-          {/* Disease Counter */}
-          <Col className="py-3">
-            <Row>
-              <DiseaseCounters />
-            </Row>
-          </Col>
           <Col></Col>
         </Row>
       </Container>
