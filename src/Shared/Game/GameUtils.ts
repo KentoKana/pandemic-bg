@@ -1,3 +1,6 @@
+import { CityCard } from "../Card/CityCard";
+import { EpidemicCard } from "../Card/EpidemicCard";
+import { EventCard } from "../Card/EventCard";
 import { City, CityId } from "../City";
 import { Cities } from "../City/Cities";
 import { GameStore } from "../Stores/GameStore";
@@ -63,5 +66,16 @@ export class GameUtils {
 
         return neighborsToUpdate;
     }
+
+    static shuffleArray<A>(array: A[]): A[] {
+        for (var i = array.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        return array;
+    }
+
 
 }

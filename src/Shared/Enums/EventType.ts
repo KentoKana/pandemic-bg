@@ -18,5 +18,5 @@ export enum EEventType {
     /**
      * Add 1 research station to any city.
      */
-    GovernmentGrand
+    GovernmentGrant
 }

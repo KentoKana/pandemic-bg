@@ -2,10 +2,10 @@ import { ICard } from ".";
 import { CityId } from "../City";
 import { ECardType } from "../Enums/CardType";
 
-export class CityCard implements ICard {
+export class InfectionCard implements ICard {
     constructor(cityId: CityId) {
         this.cityId = cityId;
     }
-    readonly cardType = ECardType.City;
-    readonly cityId: CityId;
+    readonly cardType = ECardType.Infection
+    readonly cityId;
 }

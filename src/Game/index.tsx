@@ -1,3 +1,4 @@
+import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { Board } from "../Board";
@@ -6,6 +7,8 @@ import { useStores } from "../Shared/Stores";
 
 export const Game = observer(() => {
   const { gameStore } = useStores();
+  console.log(toJS(gameStore));
+
   useEffect(() => {
     // Update Outbreak count
     gameStore.outbreakCount = GameUtils.getOutbreakCount(gameStore);

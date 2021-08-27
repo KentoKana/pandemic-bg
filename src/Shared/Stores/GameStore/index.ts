@@ -3,19 +3,27 @@ import { makeAutoObservable, runInAction } from "mobx"
 import { City, CityId } from "../../City";
 import { Disease } from "../../Disease";
 import { EDiseaseType } from "../../Enums/DiseaseType";
+import { CityCard } from "../../Card/CityCard";
+import { EpidemicCard } from "../../Card/EpidemicCard";
+import { EventCard } from "../../Card/EventCard";
+import { InfectionCard } from "../../Card/InfectionCard";
 
 export class GameStore {
     constructor(
         gridSize: { horizontal: number, vertical: number },
         cities: Cities,
         numberOfPlayers: number,
-        diseaseStates: { [key in EDiseaseType]: Disease }
+        diseaseStates: { [key in EDiseaseType]: Disease },
+        playerCards: (CityCard | EpidemicCard | EventCard)[],
+        infectionCards: InfectionCard[]
     ) {
         makeAutoObservable(this);
         this.gridSize = gridSize;
         this._cities = cities;
         this.numberOfPlayers = numberOfPlayers;
         this._diseaseStates = diseaseStates;
+        this._playerCards = playerCards;
+        this._infectionCards = infectionCards;
     }
     readonly gridSize: { horizontal: number, vertical: number } = { horizontal: 30, vertical: 20 }
     private _cities: Cities;
@@ -26,6 +34,8 @@ export class GameStore {
     public numberOfEpidemicCardsDrawn = 0;
     readonly numberOfPlayers: number = 1;
     private _diseaseStates: { [key in EDiseaseType]: Disease };
+    private _playerCards: (CityCard | EpidemicCard | EventCard)[];
+    private _infectionCards: InfectionCard[];
 
     get cities() {
         return this._cities;
@@ -96,5 +106,23 @@ export class GameStore {
             }
         }
         return this._diseaseStates;
+    }
+
+    get playerCards() {
+        return this._playerCards;
+    }
+    set playerCards(newPlayerCards: (CityCard | EpidemicCard | EventCard)[]) {
+        runInAction(() => {
+            this._playerCards = newPlayerCards;
+        })
+    }
+
+    get infectionCards() {
+        return this._infectionCards;
+    }
+    set infectionCards(newInfectionCards: InfectionCard[]) {
+        runInAction(() => {
+            this._infectionCards = newInfectionCards;
+        })
     }
 }
