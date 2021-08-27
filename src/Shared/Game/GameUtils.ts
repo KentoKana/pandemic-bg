@@ -40,20 +40,13 @@ export class GameUtils {
 
         // Base case: If the city does not have an outbreak status and the overflow of outbreak disease count have not been applied to this city,
         // return the state of neighbors post outbreak
-        if (
-            !currentCity.hasOutbreak &&
-            cityIdsAlreadyLookedAt.some(
-                (cala) => !currentCity.neighboringCityIds.some((c) => c === cala)
-            )
-        )
-            return neighborsToUpdate;
+        if (!currentCity.hasOutbreak) return neighborsToUpdate;
 
         // Iterate through each neighbors of the current city.
         // If neighboring cities have not already been traversed, apply the disease count overflow logic.
         currentCity.neighboringCityIds.forEach((neighborKey) => {
             neighborsToUpdate[neighborKey] = allCities[neighborKey];
-
-            if (!cityIdsAlreadyLookedAt.some((cala) => cala === neighborKey)) {
+            if (!cityIdsAlreadyLookedAt.some((cityId) => cityId === neighborKey)) {
                 neighborsToUpdate[neighborKey].diseaseCount += 1;
                 return this.getCityNeighborsAfterOutbreak(
                     neighborsToUpdate[neighborKey],
