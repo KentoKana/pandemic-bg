@@ -3,10 +3,8 @@ import { makeAutoObservable, runInAction } from "mobx"
 import { City, CityId } from "../../City";
 import { Disease } from "../../Disease";
 import { EDiseaseType } from "../../Enums/DiseaseType";
-import { CityCard } from "../../Card/CityCard";
-import { EpidemicCard } from "../../Card/EpidemicCard";
-import { EventCard } from "../../Card/EventCard";
 import { InfectionCard } from "../../Card/InfectionCard";
+import { PlayerCards } from "../../Card";
 
 export class GameStore {
     constructor(
@@ -14,7 +12,7 @@ export class GameStore {
         cities: Cities,
         numberOfPlayers: number,
         diseaseStates: { [key in EDiseaseType]: Disease },
-        playerCards: (CityCard | EpidemicCard | EventCard)[],
+        playerCards: PlayerCards,
         infectionCards: InfectionCard[]
     ) {
         makeAutoObservable(this);
@@ -34,7 +32,7 @@ export class GameStore {
     public numberOfEpidemicCardsDrawn = 0;
     readonly numberOfPlayers: number = 1;
     private _diseaseStates: { [key in EDiseaseType]: Disease };
-    private _playerCards: (CityCard | EpidemicCard | EventCard)[];
+    private _playerCards: PlayerCards;
     private _infectionCards: InfectionCard[];
 
     get cities() {
@@ -63,7 +61,12 @@ export class GameStore {
     }
 
     get hasLostGame(): boolean {
-        if (this._outbreakCount > 7) {
+        if (this._outbreakCount > 7 || this._playerCards.length === 0) {
+            runInAction(() => {
+                this._hasLostGame = true;
+            })
+        }
+        if (this._playerCards.length === 0) {
             runInAction(() => {
                 this._hasLostGame = true;
             })
@@ -111,7 +114,7 @@ export class GameStore {
     get playerCards() {
         return this._playerCards;
     }
-    set playerCards(newPlayerCards: (CityCard | EpidemicCard | EventCard)[]) {
+    set playerCards(newPlayerCards: PlayerCards) {
         runInAction(() => {
             this._playerCards = newPlayerCards;
         })

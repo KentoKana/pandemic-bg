@@ -32,6 +32,7 @@ export class City {
     private _diseaseType: EDiseaseType;
     private _diseaseCount: number = 0;
     private _hasOutbreak: boolean = false;
+    public hasResearchStation: boolean = false;
 
     // Methods 
     /**

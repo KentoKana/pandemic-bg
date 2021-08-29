@@ -1,6 +1,3 @@
-import { CityCard } from "../Card/CityCard";
-import { EpidemicCard } from "../Card/EpidemicCard";
-import { EventCard } from "../Card/EventCard";
 import { City, CityId } from "../City";
 import { Cities } from "../City/Cities";
 import { GameStore } from "../Stores/GameStore";
@@ -31,10 +28,12 @@ export class GameUtils {
      * @param cityIdsAlreadyLookedAt - 
      * @returns {{neighborKey: City }} Updated neighboring cities state after outbreak 
      */
-    static getCityNeighborsAfterOutbreak(currentCity: City,
+    static getCityNeighborsAfterOutbreak(
+        currentCity: City,
         allCities: Cities,
         neighborsToUpdate: { [key: string]: City },
-        cityIdsAlreadyLookedAt: CityId[]) {
+        cityIdsAlreadyLookedAt: CityId[]
+    ) {
         // Keep track of cities that outbreaks have already been applied to
         cityIdsAlreadyLookedAt.push(currentCity.id);
 
