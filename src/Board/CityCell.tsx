@@ -48,7 +48,7 @@ export const CityCell = observer(({ city }: ICityCellProps) => {
         }}
       >
         {/* {city.coordinates.x},{city.coordinates.y} */}
-        <Tooltip target={city.id}>
+        <Tooltip target={city.id} type="uncontrolled">
           {city && (
             <>
               <div>{city.name}</div>
@@ -57,9 +57,9 @@ export const CityCell = observer(({ city }: ICityCellProps) => {
               <div className="text-danger">
                 Infection Level: {city.diseaseCount}
               </div>
-              <span>
+              {/* <span>
                 {city.coordinates.x},{city.coordinates.y}
-              </span>
+              </span> */}
             </>
           )}
           <div>
