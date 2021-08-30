@@ -5,11 +5,20 @@ import { City, CityId } from "../City";
 import { Cities } from "../City/Cities";
 import { cities } from "../Data/Cities";
 import { EPlayerRoleType } from "../Enums/PlayerRoleType";
+import { ContingencyPlanner } from "./ContingencyPlanner";
+import { Dispatcher } from "./Dispatcher";
+import { Medic } from "./Medic";
+import { OperationsExpert } from "./OperationsExpert";
+import { QuarantineSpecialist } from "./QuarantineSpecialist";
+import { Researcher } from "./Researcher";
+import { Scientist } from "./Scientist";
 interface IPlayer {
     role: EPlayerRoleType;
     canPlaceResearchStation: boolean;
     playerCards: PlayerCards
+    displayName: string
 }
+
 export class Player implements IPlayer {
 
     get role(): EPlayerRoleType {
@@ -17,6 +26,7 @@ export class Player implements IPlayer {
     }
     private _playerCards: PlayerCards = [];
     private _currentCity: City = cities.atlanta;
+    readonly displayName: string = "";
 
     get canPlaceResearchStation() {
         if (this.playerCards.some((card) => card instanceof CityCard && card.cityId === this._currentCity.id)) {
@@ -56,3 +66,5 @@ export class Player implements IPlayer {
         runInAction(() => { this._currentCity = newCity; });
     }
 }
+
+export type Players = (ContingencyPlanner | Dispatcher | Medic | OperationsExpert | QuarantineSpecialist | Researcher | Scientist)[]

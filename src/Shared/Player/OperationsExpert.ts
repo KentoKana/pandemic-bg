@@ -6,6 +6,7 @@ import { Cities } from "../City/Cities";
 import { EPlayerRoleType } from "../Enums/PlayerRoleType";
 
 export class OperationsExpert extends Player {
+    readonly displayName = "Operations Expert";
     get role() {
         return EPlayerRoleType.OperationsExpert;
     }
