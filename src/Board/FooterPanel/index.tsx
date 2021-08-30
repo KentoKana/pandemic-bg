@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { Col, Container, Row } from "reactstrap";
+import { PlayersCard } from "../../UI/PlayersCard";
 
 export const FooterPanel = observer(() => {
   return (
@@ -10,11 +11,19 @@ export const FooterPanel = observer(() => {
         width: "100%",
         bottom: "0",
         right: "0",
+        minHeight: "200px",
       }}
     >
-      <Container>
+      <Container className="position-relative">
         <Row>
           <Col></Col>
+          <Col
+            lg={3}
+            className="position-absolute"
+            style={{ top: 0, right: 0 }}
+          >
+            <PlayersCard />
+          </Col>
         </Row>
       </Container>
     </div>
