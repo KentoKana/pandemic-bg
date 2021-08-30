@@ -11,7 +11,8 @@ export const FooterPanel = observer(() => {
         width: "100%",
         bottom: "0",
         right: "0",
-        minHeight: "200px",
+        // minHeight: "200px",
+        zIndex: 100,
       }}
     >
       <Container className="position-relative">
@@ -19,8 +20,8 @@ export const FooterPanel = observer(() => {
           <Col></Col>
           <Col
             lg={3}
-            className="position-absolute"
-            style={{ top: 0, right: 0 }}
+            // className="position-absolute"
+            // style={{ top: 0, right: 0 }}
           >
             <PlayersCard />
           </Col>
