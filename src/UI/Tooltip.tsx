@@ -1,14 +1,27 @@
 import { ReactNode } from "react";
-import { PopoverBody, PopoverHeader, UncontrolledPopover } from "reactstrap";
+import {
+  Popover,
+  PopoverBody,
+  PopoverHeader,
+  UncontrolledPopover,
+} from "reactstrap";
 
 interface ITooltip {
   target: string;
   children: ReactNode;
   tooltipHeader?: string;
+  type: "controlled" | "uncontrolled";
+  popoverOpen?: boolean;
 }
 
-export const Tooltip = ({ target, children, tooltipHeader }: ITooltip) => {
-  return (
+export const Tooltip = ({
+  target,
+  children,
+  tooltipHeader,
+  type,
+  popoverOpen,
+}: ITooltip) => {
+  return type === "uncontrolled" ? (
     <UncontrolledPopover
       target={target}
       trigger={"hover"}
@@ -17,5 +30,10 @@ export const Tooltip = ({ target, children, tooltipHeader }: ITooltip) => {
       {tooltipHeader && <PopoverHeader>{tooltipHeader}</PopoverHeader>}
       <PopoverBody>{children}</PopoverBody>
     </UncontrolledPopover>
+  ) : (
+    <Popover target={target} isOpen={popoverOpen}>
+      {tooltipHeader && <PopoverHeader>{tooltipHeader}</PopoverHeader>}
+      <PopoverBody>{children}</PopoverBody>
+    </Popover>
   );
 };
