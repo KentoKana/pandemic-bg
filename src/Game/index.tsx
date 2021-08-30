@@ -3,8 +3,8 @@ import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { Board } from "../Board";
 import { GameUtils } from "../Shared/Game/GameUtils";
+import { Dispatcher } from "../Shared/Player/Dispatcher";
 import { Medic } from "../Shared/Player/Medic";
-import { OperationsExpert } from "../Shared/Player/OperationsExpert";
 import { useStores } from "../Shared/Stores";
 import { StartGameTrigger } from "../UI/StartGameTrigger";
 
@@ -27,9 +27,14 @@ export const Game = observer(() => {
   // Start game
   useEffect(() => {
     if (startGame) {
-      gameStore.playerCards = gameStore.playerCards.slice(5);
+      if (gameStore.numberOfPlayers === 0) {
+        gameStore.players = [new Dispatcher(), new Medic()];
+        gameStore.dealCardsToPlayers(2);
+      }
     }
   }, [startGame, gameStore]);
+
+  console.log(toJS(gameStore.players), toJS(gameStore.playerCards));
 
   useEffect(
     () => {
