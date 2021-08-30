@@ -12,14 +12,17 @@ import { Disease } from "../Disease";
 import { EDiseaseType } from "../Enums/DiseaseType";
 import { GameUtils } from "../Game/GameUtils";
 import { GameStore } from "./GameStore";
+import { UIStore } from "./UIStore";
 
 export interface IRootStore {
     gameStore: GameStore;
+    uiStore: UIStore;
 }
 
 
 class RootStore implements IRootStore {
     gameStore: GameStore;
+    uiStore: UIStore;
 
     constructor() {
         this.gameStore = new GameStore(
@@ -32,7 +35,8 @@ class RootStore implements IRootStore {
                 [EDiseaseType.Black]: new Disease(EDiseaseType.Black, 0)
             },
             GameUtils.shuffleArray<(CityCard | EpidemicCard | EventCard)>([...cityCards, ...generateEpidemicCards(4), ...eventCards]),
-            GameUtils.shuffleArray<InfectionCard>([...infectionCards]))
+            GameUtils.shuffleArray<InfectionCard>([...infectionCards]));
+        this.uiStore = new UIStore();
 
     }
 
