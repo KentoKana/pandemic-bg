@@ -10,7 +10,7 @@ interface ICityCellProps {
 }
 
 export const CityCell = observer(({ city }: ICityCellProps) => {
-  const { gameStore } = useStores();
+  const { gameStore, uiStore } = useStores();
 
   const handleDiseaseCountUpdate = (
     diseaseCount: number,
@@ -46,6 +46,11 @@ export const CityCell = observer(({ city }: ICityCellProps) => {
         onClick={() => {
           gameStore.currentSelectedCity = gameStore.cities[city.id];
         }}
+        style={
+          uiStore.selectedPlayer?.currentCity.id === city.id
+            ? { background: "gold" }
+            : {}
+        }
       >
         {/* {city.coordinates.x},{city.coordinates.y} */}
         <Tooltip target={city.id} type="uncontrolled">

@@ -8,7 +8,7 @@ import { Accordion } from "./Accordion";
 
 interface IPlayersCard {}
 export const PlayersCard = observer(({}: IPlayersCard) => {
-  const { gameStore } = useStores();
+  const { gameStore, uiStore } = useStores();
   const [collapse, setCollapse] = useState(true);
 
   return (
@@ -29,7 +29,15 @@ export const PlayersCard = observer(({}: IPlayersCard) => {
           <CardBody>
             {gameStore.players.map((player) => {
               return (
-                <div>
+                <div
+                  key={player.role}
+                  onMouseEnter={() => {
+                    uiStore.selectedPlayer = player;
+                  }}
+                  onMouseLeave={() => {
+                    uiStore.selectedPlayer = undefined;
+                  }}
+                >
                   <Accordion heading={player.displayName}>
                     <div>Location: {player.currentCity.name}</div>
                   </Accordion>
