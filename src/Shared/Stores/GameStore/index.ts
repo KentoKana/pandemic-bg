@@ -5,20 +5,19 @@ import { Disease } from "../../Disease";
 import { EDiseaseType } from "../../Enums/DiseaseType";
 import { InfectionCard } from "../../Card/InfectionCard";
 import { PlayerCards } from "../../Card";
+import { Players } from "../../Player";
 
 export class GameStore {
     constructor(
         gridSize: { horizontal: number, vertical: number },
         cities: Cities,
-        numberOfPlayers: number,
         diseaseStates: { [key in EDiseaseType]: Disease },
         playerCards: PlayerCards,
-        infectionCards: InfectionCard[]
+        infectionCards: InfectionCard[],
     ) {
         makeAutoObservable(this);
         this.gridSize = gridSize;
         this._cities = cities;
-        this.numberOfPlayers = numberOfPlayers;
         this._diseaseStates = diseaseStates;
         this._playerCards = playerCards;
         this._infectionCards = infectionCards;
@@ -30,10 +29,11 @@ export class GameStore {
     private _hasLostGame: boolean = false;
     private _infectionRate: number = 2;
     public numberOfEpidemicCardsDrawn = 0;
-    readonly numberOfPlayers: number = 1;
     private _diseaseStates: { [key in EDiseaseType]: Disease };
     private _playerCards: PlayerCards;
     private _infectionCards: InfectionCard[];
+    private _players: Players = [];
+    readonly numberOfPlayers: number = this._players.length;
 
     get cities() {
         return this._cities;
@@ -126,6 +126,23 @@ export class GameStore {
     set infectionCards(newInfectionCards: InfectionCard[]) {
         runInAction(() => {
             this._infectionCards = newInfectionCards;
+        })
+    }
+
+    get players() {
+        return this._players;
+    }
+    set players(newPlayers: Players) {
+        runInAction(() => {
+            this._players = newPlayers;
+        })
+    }
+
+    dealCardsToPlayers(numberOfCardsToDeal: number) {
+        runInAction(() => {
+            this._players.forEach((player) => {
+                player.playerCards = this.playerCards.splice(0, numberOfCardsToDeal)
+            })
         })
     }
 }

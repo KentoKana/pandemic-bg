@@ -25,7 +25,6 @@ class RootStore implements IRootStore {
         this.gameStore = new GameStore(
             { horizontal: 30, vertical: 20 },
             cities,
-            1,
             {
                 [EDiseaseType.Red]: new Disease(EDiseaseType.Red, 0),
                 [EDiseaseType.Blue]: new Disease(EDiseaseType.Blue, 0),
